@@ -1,9 +1,12 @@
 <template>
   <div id="app">
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
     <introduction></introduction>
     <div class="icon">
-      <div class="left"></div>
-      <div class="right"></div>
+      <router-link to="/cert" class="left" tag="div"></router-link>
+      <router-link to="/about" class="right" tag="div"></router-link>
     </div>
     <main>
       <div class="plant">
@@ -13,20 +16,17 @@
         <img src="./assets/img/pot.png" alt />
       </div>
     </main>
-    <footer>
-      <div class="content">
-        <div class="footer-text">
-          <span>成长值{{growth}}</span>
-        </div>
-      </div>
-    </footer>
+    <v-footer></v-footer>
   </div>
 </template>
 
 <script>
 import introduction from "./components/introduction";
+import vFooter from "./components/vFooter";
 export default {
-  components: { introduction },
+  components: { introduction, vFooter },
+  created() {
+  },
   data() {
     return {
       growth: 20
@@ -43,11 +43,12 @@ export default {
   background-image: url("./assets/img/seed_bg.png");
   background-size: 100% 100%;
   .icon {
-    display: flex;
-    justify-content: space-between;
     position: absolute;
     top: 46%;
     left: 0px;
+    z-index: 8;
+    display: flex;
+    justify-content: space-between;
     width: 100%;
     padding: 0 8%;
     height: 46px;
@@ -83,29 +84,6 @@ export default {
       bottom: 20px;
       img {
         width: 76px;
-      }
-    }
-  }
-  footer {
-    position: relative;
-
-    width: 100%;
-    height: 18%;
-    .content {
-      position: relative;
-      width: 84%;
-      height: 50px;
-      margin: 10% auto 0;
-      background-color: #cb8f51;
-      border-radius: 25px;
-      .footer-text {
-        position: absolute;
-        top: 0px;
-        right: 0px;
-        width: 80px;
-        height: 30px;
-        background: #fff;
-        transform: translate(0, -100%);
       }
     }
   }
