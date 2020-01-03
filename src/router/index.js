@@ -10,7 +10,7 @@ export default new VueRouter({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/cert',
+      path: '/cert/:id',
       name: 'cert',
       component: () => import('../views/Cert.vue')
       // component: Cert

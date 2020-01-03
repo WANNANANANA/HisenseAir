@@ -1,5 +1,5 @@
 <template>
-  <div class="introduction">
+  <div class="introduction" :class="stage">
     <h3 class="title">智慧宏图展区介绍</h3>
     <div class="content">
       <slot>
@@ -12,17 +12,72 @@
 <script>
 export default {
   name: "introduction",
+  props: {
+    stage: {
+      type: Number,
+      required: true
+    }
+  },
+  created() {
+    console.log(this.stageTitle);
+  },
   data() {
     return {};
+  },
+  computed: {
+    stageTitle() {
+      return "part" + this.stage;
+    }
   }
 };
 </script>
 <style lang="less">
 .introduction {
+  &.part1 {
+    border-color: rgb(156, 156, 253);
+    &::-webkit-scrollbar-thumb {
+      /*滚动条里面小方块*/
+      border-radius: 10px;
+      background: rgb(156, 156, 253);
+    }
+  }
+  &.part2 {
+    border-color: rgb(0, 255, 242);
+    &::-webkit-scrollbar-thumb {
+      /*滚动条里面小方块*/
+      border-radius: 10px;
+      background: rgb(0, 255, 242);
+    }
+  }
+  &.part3 {
+    border-color: rgb(189, 255, 83);
+    &::-webkit-scrollbar-thumb {
+      /*滚动条里面小方块*/
+      border-radius: 10px;
+      background: rgb(189, 255, 83);
+    }
+  }
+  &.part4 {
+    border-color: rgb(255, 208, 0);
+    &::-webkit-scrollbar-thumb {
+      /*滚动条里面小方块*/
+      border-radius: 10px;
+      background: rgb(255, 208, 0);
+    }
+  }
+  &.part5 {
+    border-color: rgb(253, 126, 175);
+    &::-webkit-scrollbar-thumb {
+      /*滚动条里面小方块*/
+      border-radius: 10px;
+      background: rgb(253, 126, 175);
+    }
+  }
   position: relative;
   width: 100%;
   height: 42%;
-  border: 4px solid rgb(255, 166, 0);
+  border-width: 2px;
+  border: 2px solid rgb(255, 166, 0);
   border-radius: 12px;
   padding-top: 30px;
   margin: 0 auto;

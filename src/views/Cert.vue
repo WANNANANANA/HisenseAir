@@ -2,7 +2,7 @@
   <div class="cert">
     <div class="show">
       <div class="pic">
-        <p>证书编号：{{cretNum}}</p>
+        <p>证书编号：{{patent}}</p>
         <img src="../assets/img/cret.png" alt />
       </div>
       <div class="button">
@@ -16,15 +16,21 @@
 <script>
 
 export default {
-  name: "cert",
+  name: "cert",      
+  beforeRouteEnter(to, from, next) {
+    console.log(to.params);
+    next((vm) => {
+      vm.cretNum = to.params.id;
+    });
+  },
   data() {
     return {
-      cretNum: 'NM12523344'
+      patent: 'NM12523344'
     }
   },
   methods: {
     back() {
-      this.$router.go(-1);
+      this.$router.back();
     }
   }
 };
