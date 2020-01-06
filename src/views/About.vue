@@ -43,7 +43,7 @@ export default {
       .text {
         height: 80%;
         padding: 0 2%;
-        border: 1px solid green;
+        border: 1px solid rgba(60, 212, 0, 0.3);
         border-radius: 6px;
         p {
           color: #4c4c4c;
