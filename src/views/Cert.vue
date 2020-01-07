@@ -6,27 +6,25 @@
         <img src="../assets/img/cret.png" alt />
       </div>
       <div class="button">
-        <div class="left">点击上传</div>
-        <div class="right" @click="back">返回</div>
+        <div class="left"></div>
+        <div class="right" @click="back"></div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-
 export default {
-  name: "cert",      
+  name: "cert",
   beforeRouteEnter(to, from, next) {
-    console.log(to.params);
-    next((vm) => {
+    next(vm => {
       vm.cretNum = to.params.id;
     });
   },
   data() {
     return {
-      patent: 'NM12523344'
-    }
+      patent: "NM12523344"
+    };
   },
   methods: {
     back() {
@@ -74,16 +72,18 @@ export default {
     margin-top: 15px;
     div {
       border-radius: 15px;
+      height: 35px;
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
     }
     .left {
       width: 110px;
-      height: 30px;
-      background: rgb(106, 255, 106);
+      background-image: url("../assets/img/upload_btn.png");
     }
     .right {
       width: 80px;
-      height: 30px;
-      background: orange;
+      background-image: url("../assets/img/back_btn2.png");
     }
   }
 }

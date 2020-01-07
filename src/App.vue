@@ -3,13 +3,12 @@
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
-    <introduction :stageClass="stageClass" :area="area">
-    </introduction>
+    <introduction :stageClass="stageClass" :area="area"></introduction>
     <div class="icon">
       <router-link v-show="stage == 5" :to="'/cert/' + patent" class="left" tag="div"></router-link>
       <router-link to="/about" class="right" tag="div"></router-link>
     </div>
-    <main @click="click">
+    <main>
       <div class="plant">
         <transition>
           <img class="seed" v-show="stage == 1" src="./assets/img/seed.png" alt />
@@ -27,22 +26,31 @@
           <img class="tree" v-show="stage == 5" src="./assets/img/tree.png" alt />
         </transition>
       </div>
-      <div class="watering" :class="{active : potActive}">
-        <div class="pot">
-          <img src="./assets/img/pot.png" alt />
+      <transition name="watering">
+        <div class="watering" :class="{active : potActive}" v-show="potActive">
+          <div class="pot">
+            <img src="./assets/img/pot.png" alt />
+          </div>
+          <div class="water">
+            <img :style="{opacity: wateringShow1}" src="./assets/img/water3.png" alt />
+            <img :style="{opacity: wateringShow2}" src="./assets/img/water2.png" alt />
+            <img :style="{opacity: wateringShow3}" src="./assets/img/water1.png" alt />
+          </div>
         </div>
-        <div class="water">
-          <img :style="{opacity: wateringShow1}" src="./assets/img/water3.png" alt />
-          <img :style="{opacity: wateringShow2}" src="./assets/img/water2.png" alt />
-          <img :style="{opacity: wateringShow3}" src="./assets/img/water1.png" alt />
-        </div>
-      </div>
+      </transition>
     </main>
     <footer>
       <div class="content">
         <div class="growth-bar">
+          <div class="icon-bar">
+            <span class="icon-one"></span>
+            <span class="icon-two"></span>
+            <span class="icon-three"></span>
+            <span class="icon-four"></span>
+            <span class="icon-five"></span>
+          </div>
           <div class="progress">
-            <img src="./assets/img/progress.png" alt />
+            <img src="./assets/img/progress.png" :style="{marginLeft:percent}" alt />
           </div>
         </div>
         <div class="footer-text">
@@ -59,81 +67,86 @@ import introduction from "./components/introduction";
 export default {
   components: { introduction },
   created() {
-    let search = window.location.search.slice(1);
+    let search = window.location.search.slice(1),
+      { area, stage, sign, patent } = this.getParams(search);
 
-    this.area = this.getParams(search, "area");
-    this.stage = this.getParams(search, "stage");
-    this.sign = this.getParams(search, "sign");
-    this.patent = this.getParams(search, "patent");
+    // 当要播放动画(即要进行浇水动作)的时候 且不是第一阶段 则当前显示阶段要换成stage-1 浇水后变成stage
+    if (sign && stage != 1) {
+      stage--;
+    }
+    this.area = area;
+    this.stage = stage;
+    this.sign = sign;
+    this.patent = patent;
     console.log(this.area, this.stage, this.sign, this.patent);
 
-    this.growth = this.stage * 20;
-    this.growthTo = (this.stage + 1) * 20;
-
-    this.wateringFun();
+    this.growthFun(0, stage);
   },
   mounted() {
-    // if (this.stage && this.sign) {
-    //   // 不为0 即不是第一阶段 且要播放动画
-    //   let timer = setInterval(() => {
-    //     this.growth++;
-    //     if (this.growth >= this.growthTo) {
-    //       clearInterval(timer);
-    //     }
-    //   }, 100)
-    // } else {
-    //   // 第一阶段 不浇水
-    //   let timer = setInterval(() => {
-    //     this.growth++;
-    //     if (this.growth >= this.growthTo) {
-    //       clearInterval(timer);
-    //     }
-    //   }, 100)
-    // }
+    // sign为true 播放浇水动画
+    if (this.sign) {
+      let stage = this.stage;
+      setTimeout(() => {
+        this.wateringFun();
+      }, stage * 1500);
+    }
   },
   data() {
     return {
-      area: 1,
-      stage: 1, // 此阶段是当前阶段 浇水后stage + 1
-      sign: true,
-      patent: 0,
-      key: false,
+      area: 1, // 当前区域
+      stage: 1, // 将到达的目标阶段
+      sign: true, // 当前是否播放动画
+      patent: 0, // 证书编号
       growth: 0,
-      growthTo: 0,
-      potActive: true, // 控制浇水按钮
-      wateringShow1: 0,
-      wateringShow2: 0,
-      wateringShow3: 0,
+      potActive: false, // 控制浇水壶显示
+      wateringShow1: 0, // 控制水滴1显示
+      wateringShow2: 0, // 控制水滴2显示
+      wateringShow3: 0, // 控制水滴3显示
       wateringNum: 3 // 浇水次数
     };
   },
   computed: {
     stageClass() {
-      return this.stage == 0
-        ? "stage" + (this.stage + 1)
-        : "stage" + this.stage;
+      return "stage" + this.stage;
+    },
+    percent() {
+      return this.growth - 100 + "%";
     }
   },
   methods: {
-    getParams(matchStr, key) {
-      let reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)"),
-        result = matchStr.match(reg);
-      return result == null ? null : result[2];
+    // 获取参数
+    getParams(matchStr) {
+      function createReg(key) {
+        return new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+      }
+      let area = matchStr.match(createReg("area")),
+        stage = matchStr.match(createReg("stage")),
+        sign = matchStr.match(createReg("sign")),
+        patent = matchStr.match(createReg("patent"));
+
+      return {
+        area: area == null ? 1 : area[2],
+        stage: stage == null ? 1 : stage[2],
+        sign: sign == null ? false : sign[2],
+        patent: patent == null ? null : patent[2]
+      };
     },
+    // 浇水动画
     wateringFun() {
-      console.log("water");
-      new Promise((resolve, reject) => {
+      let stage = this.stage;
+      this.potActive = true;
+      return new Promise((resolve, reject) => {
         setTimeout(() => {
           this.wateringShow3 = 1;
           resolve();
-        }, 600);
+        }, 500);
       })
         .then(() => {
           return new Promise((resolve, reject) => {
             setTimeout(() => {
               this.wateringShow2 = 1;
               resolve();
-            }, 600);
+            }, 500);
           });
         })
         .then(() => {
@@ -141,7 +154,7 @@ export default {
             setTimeout(() => {
               this.wateringShow1 = 1;
               resolve();
-            }, 600);
+            }, 500);
           });
         })
         .then(() => {
@@ -150,26 +163,35 @@ export default {
               this.wateringShow1 = 0;
               this.wateringShow2 = 0;
               this.wateringShow3 = 0;
-              console.log("finish");
               resolve(this.wateringNum--);
-            }, 600);
+            }, 500);
           });
         })
         .then(result => {
           if (this.wateringNum) {
             this.wateringFun();
+          } else {
+            this.potActive = false;
+            setTimeout(() => {
+              stage++;
+              this.stage = stage;
+              this.growthFun(stage - 1, stage);
+            }, 2000);
           }
         });
     },
-    changeGrowth() {},
-    click() {
-      this.stage++;
-      // let timer = setInterval(() => {
-      //   this.growth++;
-      //   if (this.growth >= this.growthTo) {
-      //     clearInterval(timer);
-      //   }
-      // }, 100);
+    // 进度条动画
+    growthFun(startStage, endStage) {
+      let baseGrowth = 20,
+        startGrowth = startStage * baseGrowth,
+        endGrowth = endStage * baseGrowth,
+        timer = setInterval(() => {
+          startGrowth++;
+          this.growth = startGrowth;
+          if (startGrowth == endGrowth) {
+            clearInterval(timer);
+          }
+        }, 50);
     }
   }
 };
@@ -185,6 +207,19 @@ export default {
 }
 .v-enter-to,
 .v-leave {
+  opacity: 1;
+}
+
+.watering-enter-active,
+.watering-leave-active {
+  transition: opacity 1s linear;
+}
+.watering-enter,
+.watering-leave-to {
+  opacity: 0;
+}
+.watering-enter-to,
+.watering-leave {
   opacity: 1;
 }
 
@@ -292,7 +327,7 @@ export default {
       right: 20px;
       bottom: 20px;
       &.active {
-        animation: potRotate 1.2s ease-out 0s 6 alternate;
+        animation: potRotate 1s ease-out 0s 6 alternate;
       }
       .pot {
         transform: rotateZ(-50deg);
@@ -332,19 +367,52 @@ export default {
     height: 18%;
     .growth-bar {
       position: relative;
-      width: 90%;
+      width: 280px;
       height: 100%;
-      margin-left: 5%;
+      margin: 0 auto;
       background-image: url("./assets/img/growth_bg.png");
       background-size: 100%;
       background-repeat: no-repeat;
       background-position: center center;
+      .icon-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9;
+        span {
+          display: inline-block;
+          width: 30px;
+          height: 30px;
+          background-image: url("./assets/img/icon_sprite.png");
+          background-size: 100%;
+          &.icon-one {
+            background-position: center -300px;
+          }
+          &.icon-two {
+            background-position: center -300px;
+          }
+          &.icon-three {
+            background-position: center -300px;
+          }
+          &.icon-four {
+            background-position: center -300px;
+          }
+          &.icon-five {
+            background-position: center -300px;
+          }
+        }
+      }
       .progress {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 96%;
+        width: 94%;
         font-size: 0;
         overflow: hidden;
         img {
