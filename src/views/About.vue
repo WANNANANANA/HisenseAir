@@ -1,22 +1,22 @@
 <template>
   <div class="about">
     <introduction>
-      <div class="text">
-        <p>1、这是一段无限复制的话这是一段无限复制的话这是一段无限复制的话这是一段无限复制的话这是一段无限复制的话这是一段无限复制的话。</p>
-        <p>2、这是一段无限复制的话这是一段无限复制的话这是一段无限复制的话这是一段无限复制的话这是一段无限复制的话这是一段无限复制的话。</p>
-        <p>3、这是一段无限复制的话这是一段无限复制的话这是一段无限复制的话这是一段无限复制的话这是一段无限复制的话这是一段无限复制的话。</p>
+      <h3 class="title">能量收集说明</h3>
+      <div class="content">
+        <div class="text">
+          <p>1、这是一段无限复制的话这是一段无限复制的话这是一段无限复制的话这是一段无限复制的话这是一段无限复制的话这是一段无限复制的话。</p>
+          <p>2、这是一段无限复制的话这是一段无限复制的话这是一段无限复制的话这是一段无限复制的话这是一段无限复制的话这是一段无限复制的话。</p>
+          <p>3、这是一段无限复制的话这是一段无限复制的话这是一段无限复制的话这是一段无限复制的话这是一段无限复制的话这是一段无限复制的话。</p>
+        </div>
+        <div class="back" @click="back"></div>
       </div>
-      <div class="back" @click="back"></div>
     </introduction>
   </div>
 </template>
 <script>
-import introduction from "../components/introduction"
+import introduction from "../components/introduction";
 export default {
   components: { introduction },
-  data() {
-    return {};
-  },
   methods: {
     back() {
       this.$router.back();
@@ -33,7 +33,10 @@ export default {
   height: 100%;
   padding: 36px 8% 0 8%;
   z-index: 10;
-  background: #fff;
+  // background: #fff;
+  background-image: url('../assets/img/blur_bg.png');
+  background-size: 100%;
+  background-position: top center;
   .introduction {
     width: 100%;
     height: 76% !important;
