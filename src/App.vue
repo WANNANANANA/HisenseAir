@@ -5,7 +5,7 @@
     </keep-alive>
     <introduction :stageClass="stageClass" :area="area"></introduction>
     <div class="icon">
-      <router-link v-show="stage == 5" :to="'/cert/' + patent" class="left" tag="div"></router-link>
+      <router-link v-if="stage == 5" :to="'/cert/' + patent" class="left" tag="div"></router-link>
       <router-link to="/about" class="right" tag="div" @click.native="showAboutFun"></router-link>
     </div>
     <main>
@@ -40,17 +40,19 @@
       </transition>
     </main>
     <footer>
-      <div class="content">
-        <div class="growth-bar">
-          <div class="icon-bar">
-            <span class="icon-one"></span>
-            <span class="icon-two"></span>
-            <span class="icon-three"></span>
-            <span class="icon-four"></span>
-            <span class="icon-five"></span>
-          </div>
-          <div class="progress">
-            <img src="./assets/img/progress.png" :style="{marginLeft:percent}" alt />
+      <div class="footer-box">
+        <div class="footer-growth">
+          <div class="growth-bar">
+            <div class="icon-bar">
+              <span class="icon-one"></span>
+              <span class="icon-two"></span>
+              <span class="icon-three"></span>
+              <span class="icon-four"></span>
+              <span class="icon-five"></span>
+            </div>
+            <div class="progress">
+              <img src="./assets/img/progress.png" :style="{marginLeft:percent}" alt />
+            </div>
           </div>
         </div>
         <div class="footer-text">
@@ -59,11 +61,11 @@
       </div>
     </footer>
     <div class="bg">
-      <img v-if="showChangeBg" :src="bgReplace" alt />
+      <div class="img" v-if="showChangeBg" :style="{backgroundImage: 'url(' + bgReplace + ')'}"></div>
       <transition>
-        <img v-show="!changeBg" :src="bg" alt />
+        <div class="img" v-show="!changeBg" :style="{backgroundImage: 'url(' + bg + ')'}"></div>
       </transition>
-      <img v-show="showBlurBg" src="./assets/img/blur_bg.png" alt />
+      <div class="img about-img" v-show="showBlurBg"></div>
     </div>
   </div>
 </template>
@@ -107,6 +109,7 @@ export default {
         require("./assets/img/seed_bg.png"),
         require("./assets/img/sprout_bg.png"),
         require("./assets/img/branch_bg.png"),
+        require("./assets/img/tree_bg.png"),
         require("./assets/img/tree_bg.png")
       ],
       bg: "",
@@ -118,6 +121,8 @@ export default {
       stage: 1, // 将到达的目标阶段
       sign: true, // 当前是否播放动画
       patent: 0, // 证书编号
+      plant: '',
+      changePlant: '',
       growth: 0, // 初始化成长值
       potActive: false, // 控制浇水壶显示
       wateringShow1: 0, // 控制水滴1显示
@@ -262,23 +267,19 @@ export default {
   height: 100%;
   padding: 36px 8% 0 8%;
   background-size: 100% 100%;
-  transition: all 5s linear;
   &.stage1 {
-    // background-image: url("./assets/img/seed_bg.png");
     .watering {
       right: 20px;
       bottom: 60px;
     }
   }
   &.stage2 {
-    // background-image: url("./assets/img/sprout_bg.png");
     .watering {
       right: 20px;
       bottom: 90px;
     }
   }
   &.stage3 {
-    // background-image: url("./assets/img/branch_bg.png");
     .watering {
       right: 35px;
       bottom: 150px;
@@ -290,10 +291,6 @@ export default {
       bottom: 180px;
     }
   }
-  &.stage4,
-  &.stage5 {
-    // background-image: url("./assets/img/tree_bg.png");
-  }
 
   .icon {
     position: absolute;
@@ -304,15 +301,16 @@ export default {
     height: 46px;
     padding: 0 8%;
     div {
-      width: 46px;
       height: 46px;
       background-size: 100% 100%;
       &.left {
         float: left;
+        width: 76px;
         background-image: url("./assets/img/icon_left.png");
       }
       &.right {
         float: right;
+        width: 50px;
         background-image: url("./assets/img/icon_right.png");
       }
     }
@@ -331,19 +329,20 @@ export default {
         bottom: 0px;
         transform: translate(-50%, 0);
         &.seed {
-          width: 120px;
+          width: 38%;
         }
         &.sprout {
-          width: 100px;
+          width: 32.5%;
         }
         &.branch {
-          width: 116px;
+          width: 37%;
         }
         &.sapling {
-          width: 144px;
+          width: 46%;
         }
         &.tree {
-          width: 240px;
+          left: 52%;
+          width: 76%;
         }
       }
     }
@@ -387,79 +386,87 @@ export default {
     position: absolute;
     bottom: 0px;
     left: 0px;
-    z-index: 12;
+    z-index: 16;
     width: 100%;
     height: 18%;
-    .growth-bar {
-      position: relative;
-      width: 280px;
-      height: 100%;
-      margin: 0 auto;
-      background-image: url("./assets/img/growth_bg.png");
-      background-size: 100%;
-      background-repeat: no-repeat;
-      background-position: center center;
-      .icon-bar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        width: 100%;
-        height: 100%;
-        z-index: 9;
-        span {
-          display: inline-block;
-          width: 30px;
-          height: 30px;
-          background-image: url("./assets/img/icon_sprite.png");
-          background-size: 100%;
-          &.icon-one {
-            background-position: center -300px;
-          }
-          &.icon-two {
-            background-position: center -300px;
-          }
-          &.icon-three {
-            background-position: center -300px;
-          }
-          &.icon-four {
-            background-position: center -300px;
-          }
-          &.icon-five {
-            background-position: center -300px;
-          }
-        }
-      }
-      .progress {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 94%;
-        font-size: 0;
-        overflow: hidden;
-        img {
-          margin-left: -80%;
-          width: 100%;
-        }
-      }
-    }
-    .content {
+    .footer-box {
       position: absolute;
-      left: 8%;
+      left: 50%;
       bottom: 0;
+      z-index: 15;
+      transform: translate(-50%, 0);
       margin-bottom: 5vh;
       width: 84%;
       height: 50px;
-      background-color: #cb8f51;
-      border-radius: 25px;
+      .footer-growth {
+        width: 100%;
+        height: 100%;
+        background-color: #cb8f51;
+        border-radius: 25px;
+        .growth-bar {
+          position: relative;
+          width: 280px;
+          max-width: 89%;
+          height: 100%;
+          margin: 0 auto;
+          background-image: url("./assets/img/growth_bg.png");
+          background-size: 100%;
+          background-repeat: no-repeat;
+          background-position: center center;
+          .icon-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9;
+            span {
+              display: inline-block;
+              width: 30px;
+              height: 30px;
+              background-image: url("./assets/img/icon_sprite.png");
+              background-size: 100%;
+              &.icon-one {
+                background-position: center -301px;
+              }
+              &.icon-two {
+                background-position: center -331px;
+              }
+              &.icon-three {
+                background-position: center -361px;
+              }
+              &.icon-four {
+                background-position: center -392px;
+              }
+              &.icon-five {
+                background-position: center -421px;
+              }
+            }
+          }
+          .progress {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 8;
+            transform: translate(-50%, -50%);
+            width: 94%;
+            font-size: 0;
+            overflow: hidden;
+            img {
+              margin-left: -80%;
+              width: 100%;
+            }
+          }
+        }
+      }
       .footer-text {
         position: absolute;
         top: 40px;
         right: 0px;
-        z-index: -8;
+        z-index: -12;
         width: 100px;
         height: 72px;
         line-height: 26px;
@@ -498,11 +505,17 @@ export default {
     font-size: 0;
     z-index: -10;
     overflow: hidden;
-    img {
+    .img {
       position: absolute;
       top: 0px;
       left: 0px;
+      width: 100%;
       height: 100%;
+      background-size: cover;
+      background-position: center center;
+      &.about-img {
+        background-image: url('./assets/img/blur_bg.png');
+      }
     }
   }
 }
