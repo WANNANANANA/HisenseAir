@@ -20,6 +20,7 @@ export default {
   methods: {
     back() {
       this.$router.back();
+      this.$parent.showBlurBg = false;
     }
   }
 };
@@ -35,7 +36,7 @@ export default {
   z-index: 10;
   // background: #fff;
   background-image: url('../assets/img/blur_bg.png');
-  background-size: 100%;
+  background-size: cover;
   background-position: top center;
   .introduction {
     width: 100%;
@@ -48,15 +49,17 @@ export default {
         padding: 0 2%;
         border: 1px solid rgba(60, 212, 0, 0.3);
         border-radius: 6px;
+        overflow: scroll;
         p {
           color: #4c4c4c;
           font-size: 14px;
           margin-top: 12px;
           text-indent: 2em;
+          padding: 0px;
         }
       }
       .back {
-        width: 112px;
+        width: 40%;
         height: 20%;
         margin: 0 auto;
         padding-top: 8%;

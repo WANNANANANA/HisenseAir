@@ -6,7 +6,7 @@
     <introduction :stageClass="stageClass" :area="area"></introduction>
     <div class="icon">
       <router-link v-show="stage == 5" :to="'/cert/' + patent" class="left" tag="div"></router-link>
-      <router-link to="/about" class="right" tag="div"></router-link>
+      <router-link to="/about" class="right" tag="div" @click.native="showAboutFun"></router-link>
     </div>
     <main>
       <div class="plant">
@@ -58,6 +58,13 @@
         </div>
       </div>
     </footer>
+    <div class="bg">
+      <img v-if="showChangeBg" :src="bgReplace" alt />
+      <transition>
+        <img v-show="!changeBg" :src="bg" alt />
+      </transition>
+      <img v-show="showBlurBg" src="./assets/img/blur_bg.png" alt />
+    </div>
   </div>
 </template>
 
@@ -68,12 +75,15 @@ export default {
   components: { introduction },
   created() {
     let search = window.location.search.slice(1),
-      { area, stage, sign, patent } = this.getParams(search);
+      { area, stage, sign, patent } = this.getParams(search); // String类型
 
     // 当要播放动画(即要进行浇水动作)的时候 且不是第一阶段 则当前显示阶段要换成stage-1 浇水后变成stage
-    if (sign && stage != 1) {
+    if (sign == "true" && stage != 1) {
       stage--;
+      this.showChangeBg = true;
+      this.bgReplace = this.bgArr[stage];
     }
+    this.bg = this.bgArr[stage - 1];
     this.area = area;
     this.stage = stage;
     this.sign = sign;
@@ -84,7 +94,7 @@ export default {
   },
   mounted() {
     // sign为true 播放浇水动画
-    if (this.sign) {
+    if (this.sign == "true") {
       let stage = this.stage;
       setTimeout(() => {
         this.wateringFun();
@@ -93,11 +103,22 @@ export default {
   },
   data() {
     return {
+      bgArr: [
+        require("./assets/img/seed_bg.png"),
+        require("./assets/img/sprout_bg.png"),
+        require("./assets/img/branch_bg.png"),
+        require("./assets/img/tree_bg.png")
+      ],
+      bg: "",
+      bgReplace: "",
+      showChangeBg: false,
+      changeBg: false,
+      showBlurBg: false,
       area: 1, // 当前区域
       stage: 1, // 将到达的目标阶段
       sign: true, // 当前是否播放动画
       patent: 0, // 证书编号
-      growth: 0,
+      growth: 0, // 初始化成长值
       potActive: false, // 控制浇水壶显示
       wateringShow1: 0, // 控制水滴1显示
       wateringShow2: 0, // 控制水滴2显示
@@ -176,6 +197,7 @@ export default {
               stage++;
               this.stage = stage;
               this.growthFun(stage - 1, stage);
+              this.changeBg = true;
             }, 2000);
           }
         });
@@ -192,6 +214,9 @@ export default {
             clearInterval(timer);
           }
         }, 50);
+    },
+    showAboutFun() {
+      this.showBlurBg = true;
     }
   }
 };
@@ -239,21 +264,21 @@ export default {
   background-size: 100% 100%;
   transition: all 5s linear;
   &.stage1 {
-    background-image: url("./assets/img/seed_bg.png");
+    // background-image: url("./assets/img/seed_bg.png");
     .watering {
       right: 20px;
       bottom: 60px;
     }
   }
   &.stage2 {
-    background-image: url("./assets/img/sprout_bg.png");
+    // background-image: url("./assets/img/sprout_bg.png");
     .watering {
       right: 20px;
       bottom: 90px;
     }
   }
   &.stage3 {
-    background-image: url("./assets/img/branch_bg.png");
+    // background-image: url("./assets/img/branch_bg.png");
     .watering {
       right: 35px;
       bottom: 150px;
@@ -267,7 +292,7 @@ export default {
   }
   &.stage4,
   &.stage5 {
-    background-image: url("./assets/img/tree_bg.png");
+    // background-image: url("./assets/img/tree_bg.png");
   }
 
   .icon {
@@ -461,6 +486,23 @@ export default {
           }
         }
       }
+    }
+  }
+  .bg {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-size: 0;
+    z-index: -10;
+    overflow: hidden;
+    img {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      height: 100%;
     }
   }
 }
