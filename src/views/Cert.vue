@@ -2,7 +2,7 @@
   <div class="cert">
     <div class="show">
       <div class="pic">
-        <p>证书编号：{{patent}}</p>
+        <p>证书编号：{{cretNum}}</p>
         <img src="../assets/img/cret.png" alt />
       </div>
       <div class="button">
@@ -23,7 +23,7 @@ export default {
   },
   data() {
     return {
-      patent: "NM12523344"
+      cretNum: ""
     };
   },
   methods: {

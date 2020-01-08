@@ -98,6 +98,27 @@ export default {
       ];
     let search = window.location.search.slice(1),
       { area, stage, sign, patent } = this.getParams(search); // String类型
+    
+    switch(area) {
+      case 'area_one': 
+        area = 1;
+        break;
+      case 'area_two': 
+        area = 2;
+        break;
+      case 'area_three': 
+        area = 3;
+        break;
+      case 'area_four':
+        area = 4;
+        break;
+      case 'area_five': 
+        area = 5;
+        break;
+      default: 
+        area = 1;
+        break;
+    }
 
     // 避免后台第一阶段也传的是true
     if (stage == 1) {
@@ -313,9 +334,12 @@ export default {
     }
   }
 
+  .introduction {
+    height: 36%;
+  }
   .icon {
     position: absolute;
-    top: 46%;
+    top: 41%;
     left: 0px;
     z-index: 8;
     width: 100%;
@@ -339,7 +363,7 @@ export default {
   main {
     position: relative;
     width: 100%;
-    height: 40%;
+    height: 44%;
     text-align: center;
     .plant {
       width: 100%;
@@ -422,8 +446,11 @@ export default {
       .footer-growth {
         width: 100%;
         height: 100%;
-        background-color: #cb8f51;
-        border-radius: 25px;
+        background-image: url('./assets/img/footer_bg.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        // background-color: #cb8f51;
+        // border-radius: 25px;
         .growth-bar {
           position: relative;
           width: 280px;
@@ -451,19 +478,19 @@ export default {
               background-image: url("./assets/img/icon_sprite.png");
               background-size: 100%;
               &.icon-one {
-                background-position: center -301px;
+                background-position: center -300px;
               }
               &.icon-two {
-                background-position: center -331px;
+                background-position: center -330px;
               }
               &.icon-three {
-                background-position: center -361px;
+                background-position: center -360px;
               }
               &.icon-four {
-                background-position: center -392px;
+                background-position: center -390px;
               }
               &.icon-five {
-                background-position: center -421px;
+                background-position: center -420px;
               }
             }
           }
