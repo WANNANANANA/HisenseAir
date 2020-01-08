@@ -11,19 +11,10 @@
     <main>
       <div class="plant">
         <transition>
-          <img class="seed" v-show="stage == 1" src="./assets/img/seed.png" alt />
+          <img v-if="sign" :class="changePlantClass" v-show="changeBg" :src="changePlantImg" alt />
         </transition>
         <transition>
-          <img class="sprout" v-show="stage == 2" src="./assets/img/sprout.png" alt />
-        </transition>
-        <transition>
-          <img class="branch" v-show="stage == 3" src="./assets/img/branch.png" alt />
-        </transition>
-        <transition>
-          <img class="sapling" v-show="stage == 4" src="./assets/img/sapling.png" alt />
-        </transition>
-        <transition>
-          <img class="tree" v-show="stage == 5" src="./assets/img/tree.png" alt />
+          <img :class="plantClass" v-show="!changeBg" :src="plantImg" alt />
         </transition>
       </div>
       <transition name="watering">
@@ -76,16 +67,54 @@ import introduction from "./components/introduction";
 export default {
   components: { introduction },
   created() {
+    let plantArr = [
+        {
+          name: "seed",
+          img: require("./assets/img/seed.png")
+        },
+        {
+          name: "sprout",
+          img: require("./assets/img/sprout.png")
+        },
+        {
+          name: "branch",
+          img: require("./assets/img/branch.png")
+        },
+        {
+          name: "sapling",
+          img: require("./assets/img/sapling.png")
+        },
+        {
+          name: "tree",
+          img: require("./assets/img/tree.png")
+        }
+      ],
+      bgArr = [
+        require("./assets/img/seed_bg.png"),
+        require("./assets/img/sprout_bg.png"),
+        require("./assets/img/branch_bg.png"),
+        require("./assets/img/tree_bg.png"),
+        require("./assets/img/tree_bg.png")
+      ];
     let search = window.location.search.slice(1),
       { area, stage, sign, patent } = this.getParams(search); // String类型
+
+    // 避免后台第一阶段也传的是true
+    if (stage == 1) {
+      sign = false;
+    }
 
     // 当要播放动画(即要进行浇水动作)的时候 且不是第一阶段 则当前显示阶段要换成stage-1 浇水后变成stage
     if (sign == "true" && stage != 1) {
       stage--;
       this.showChangeBg = true;
-      this.bgReplace = this.bgArr[stage];
+      this.bgReplace = bgArr[stage];
+      this.changePlantClass = plantArr[stage].name;
+      this.changePlantImg = plantArr[stage].img;
     }
-    this.bg = this.bgArr[stage - 1];
+    this.plantClass = plantArr[stage - 1].name;
+    this.plantImg = plantArr[stage - 1].img;
+    this.bg = bgArr[stage - 1];
     this.area = area;
     this.stage = stage;
     this.sign = sign;
@@ -105,13 +134,6 @@ export default {
   },
   data() {
     return {
-      bgArr: [
-        require("./assets/img/seed_bg.png"),
-        require("./assets/img/sprout_bg.png"),
-        require("./assets/img/branch_bg.png"),
-        require("./assets/img/tree_bg.png"),
-        require("./assets/img/tree_bg.png")
-      ],
       bg: "",
       bgReplace: "",
       showChangeBg: false,
@@ -121,8 +143,10 @@ export default {
       stage: 1, // 将到达的目标阶段
       sign: true, // 当前是否播放动画
       patent: 0, // 证书编号
-      plant: '',
-      changePlant: '',
+      plantClass: "",
+      plantImg: "",
+      changePlantClass: "",
+      changePlantImg: "",
       growth: 0, // 初始化成长值
       potActive: false, // 控制浇水壶显示
       wateringShow1: 0, // 控制水滴1显示
@@ -140,7 +164,6 @@ export default {
     }
   },
   methods: {
-    // 获取参数
     getParams(matchStr) {
       function createReg(key) {
         return new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
@@ -157,7 +180,6 @@ export default {
         patent: patent == null ? null : patent[2]
       };
     },
-    // 浇水动画
     wateringFun() {
       let stage = this.stage;
       this.potActive = true;
@@ -207,7 +229,6 @@ export default {
           }
         });
     },
-    // 进度条动画
     growthFun(startStage, endStage) {
       let baseGrowth = 20,
         startGrowth = startStage * baseGrowth,
@@ -514,7 +535,7 @@ export default {
       background-size: cover;
       background-position: center center;
       &.about-img {
-        background-image: url('./assets/img/blur_bg.png');
+        background-image: url("./assets/img/blur_bg.png");
       }
     }
   }

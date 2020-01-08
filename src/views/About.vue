@@ -59,14 +59,13 @@ export default {
         }
       }
       .back {
-        width: 40%;
-        height: 20%;
-        margin: 0 auto;
-        padding-top: 8%;
-        background-origin: content-box;
-        background-image: url("../assets/img/back_btn.png");
+        width: 110px;
+        height: 45px;
+        margin: 8% auto 0;
+        background-clip: content-box;
+        background-image: url("../assets/img/btn_sprite.png");
         background-size: 100%;
-        background-repeat: no-repeat;
+        background-position: 0px -2px;
       }
     }
   }

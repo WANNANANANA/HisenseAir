@@ -38,7 +38,7 @@ export default {
   position: absolute;
   top: 0px;
   left: 0px;
-  z-index: 15;
+  z-index: 18;
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
@@ -73,17 +73,19 @@ export default {
     div {
       border-radius: 15px;
       height: 35px;
-      background-size: contain;
-      background-position: center;
       background-repeat: no-repeat;
     }
     .left {
       width: 110px;
-      background-image: url("../assets/img/upload_btn.png");
+      background-image: url("../assets/img/btn_sprite.png");
+      background-size: 100%;
+      background-position: 0px -100px;
     }
     .right {
-      width: 80px;
-      background-image: url("../assets/img/back_btn2.png");
+      width: 82px;
+      background-image: url("../assets/img/btn_sprite.png");
+      background-size: 102%;
+      background-position: center -36px;
     }
   }
 }
