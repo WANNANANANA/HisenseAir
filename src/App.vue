@@ -35,11 +35,11 @@
         <div class="footer-growth">
           <div class="growth-bar">
             <div class="icon-bar">
-              <span class="icon-one"></span>
-              <span class="icon-two"></span>
-              <span class="icon-three"></span>
-              <span class="icon-four"></span>
-              <span class="icon-five"></span>
+              <span class="icon-one" :class="{active : growth >= 0}"></span>
+              <span class="icon-two" :class="{active : growth >= 30}"></span>
+              <span class="icon-three" :class="{active : growth >= 56}"></span>
+              <span class="icon-four" :class="{active : growth >= 80}"></span>
+              <span class="icon-five" :class="{active : growth >= 100}"></span>
             </div>
             <div class="progress">
               <img src="./assets/img/progress.png" :style="{marginLeft:percent}" alt />
@@ -98,24 +98,24 @@ export default {
       ];
     let search = window.location.search.slice(1),
       { area, stage, sign, patent } = this.getParams(search); // String类型
-    
-    switch(area) {
-      case 'area_one': 
+
+    switch (area) {
+      case "area_one":
         area = 1;
         break;
-      case 'area_two': 
+      case "area_two":
         area = 2;
         break;
-      case 'area_three': 
+      case "area_three":
         area = 3;
         break;
-      case 'area_four':
+      case "area_four":
         area = 4;
         break;
-      case 'area_five': 
+      case "area_five":
         area = 5;
         break;
-      default: 
+      default:
         area = 1;
         break;
     }
@@ -363,7 +363,7 @@ export default {
   main {
     position: relative;
     width: 100%;
-    height: 44%;
+    height: 45%;
     text-align: center;
     .plant {
       width: 100%;
@@ -433,24 +433,24 @@ export default {
     left: 0px;
     z-index: 16;
     width: 100%;
-    height: 18%;
+    height: 19%;
     .footer-box {
       position: absolute;
       left: 50%;
       bottom: 0;
       z-index: 15;
       transform: translate(-50%, 0);
-      margin-bottom: 5vh;
+      margin-bottom: 4.2vh;
       width: 84%;
       height: 50px;
+      box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 2px;
+      border-radius: 25px;
       .footer-growth {
         width: 100%;
         height: 100%;
-        background-image: url('./assets/img/footer_bg.png');
-        background-size: contain;
-        background-repeat: no-repeat;
-        // background-color: #cb8f51;
-        // border-radius: 25px;
+        background-color: #cb8f51;
+        box-shadow: #f8e8b0 1px 2px 2px inset;
+        border-radius: 25px;
         .growth-bar {
           position: relative;
           width: 280px;
@@ -492,6 +492,26 @@ export default {
               &.icon-five {
                 background-position: center -420px;
               }
+              &.active {
+                background-image: url("./assets/img/test.png");
+                background-size: 90%;
+                background-repeat: no-repeat;
+                &.icon-one {
+                  background-position: 1px -1px;
+                }
+                &.icon-two {
+                  background-position: 1px -33px;
+                }
+                &.icon-three {
+                  background-position: 1px -64px;
+                }
+                &.icon-four {
+                  background-position: 1px -96px;
+                }
+                &.icon-five {
+                  background-position: 1px -127px;
+                }
+              }
             }
           }
           .progress {
@@ -517,14 +537,10 @@ export default {
         z-index: -12;
         width: 100px;
         height: 72px;
-        line-height: 26px;
-        border: #cb8f51 4px solid;
-        border-top-left-radius: 6px;
-        border-top-right-radius: 25px;
-        border-bottom-right-radius: 25px;
-        box-shadow: #666 0px 0px 2px inset;
-        background-color: #f8e8b0;
+        line-height: 36px;
         transform: translate(0, -100%);
+        background-image: url("./assets/img/footer_text.png");
+        background-size: 100%;
         .growth {
           color: #0aaf12;
           &::before {
@@ -536,7 +552,7 @@ export default {
             background-repeat: no-repeat;
             background-size: 100%;
             background-position: center;
-            margin: 0 5px;
+            margin: 0px 3px 0px 8px;
             vertical-align: text-bottom;
           }
         }
