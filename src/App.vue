@@ -493,7 +493,7 @@ export default {
                 background-position: center -420px;
               }
               &.active {
-                background-image: url("./assets/img/test.png");
+                background-image: url("./assets/img/active_icon_sprite.png");
                 background-size: 90%;
                 background-repeat: no-repeat;
                 &.icon-one {
