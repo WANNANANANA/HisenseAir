@@ -476,21 +476,21 @@ export default {
               width: 30px;
               height: 30px;
               background-image: url("./assets/img/icon_sprite.png");
-              background-size: 100%;
+              background-size: 90%;
               &.icon-one {
-                background-position: center -300px;
+                background-position: 1px -1px;
               }
               &.icon-two {
-                background-position: center -330px;
+                background-position: 1px -33px;
               }
               &.icon-three {
-                background-position: center -360px;
+                background-position: 1px -64px;
               }
               &.icon-four {
-                background-position: center -390px;
+                background-position: 1px -96px;
               }
               &.icon-five {
-                background-position: center -420px;
+                background-position: 1px -127px;
               }
               &.active {
                 background-image: url("./assets/img/active_icon_sprite.png");
