@@ -1,7 +1,7 @@
 <template>
   <div class="introduction" :class="stageClass">
     <slot>
-      <div class="sort" v-if="area == 1">
+      <div class="sort" v-if="area == 'area_one'">
         <h3 class="title">智慧宏图</h3>
         <div class="content">
           <p>海信日立公司成立于2003年1月8日，是由海信集团与日立空调共同投资在青岛建立的集商用空调技术开发、产品制造、市场销售和用户服务为一体的大型合资企业，拥有大型变频多联式空调系统生产基地。</p>
@@ -10,7 +10,7 @@
           <img src="../assets/img/1-2.jpg" alt />
         </div>
       </div>
-      <div class="sort" v-if="area == 2">
+      <div class="sort" v-if="area == 'area_two'">
         <h3 class="title">智尖科技</h3>
         <div class="content">
           <p>海信中央空调以科技推动产品创新，全面掌握世界领先的核心技术，控制技术，变频技术，全直流技术，换热技术和冷媒散热技术五大核心技术汇聚成了海信中央空调的精益品质。</p>
@@ -19,7 +19,7 @@
           <img src="../assets/img/2-2.jpg" alt />
         </div>
       </div>
-      <div class="sort" v-if="area == 3">
+      <div class="sort" v-if="area == 'area_three'">
         <h3 class="title">智舒生活</h3>
         <div class="content">
           <p>海信智慧生态家，通过真正的绿色产品技术，力求为每一位用户带来更舒适的家居生活。</p>
@@ -54,14 +54,14 @@
           <img src="../assets/img/3-11.jpg" alt />
         </div>
       </div>
-      <div class="sort" v-if="area == 4">
+      <div class="sort" v-if="area == 'area_four'">
         <h3 class="title">智联世界</h3>
         <div class="content">
           <p>公建产品展示区，展区背景利用楼宇形态进行串联，空调产品阵列展示，主力产品包括M2系列多联机、G2系列多联机、三管制水源多联机、风冷模块、NEW X系列多联机和商用热水机。滑轨移屏结合实物动态展示相应空调内部构造和功能特性。</p>
           <img src="../assets/img/4-1.jpg" alt />
         </div>
       </div>
-      <div class="sort" v-if="area == 5">
+      <div class="sort" v-if="area == 'area_five'">
         <h3 class="title">智融万家</h3>
         <div class="content">
           <p>海信中央空调一直致力于为客户提供全流程的服务体验，现已拥有220名厂家专业技术人员，3000家授权安装商，1200家授权认证的服务商，从技术的专业性、安装的规范性、服务的及时性三个方面保证用户的使用。</p>
