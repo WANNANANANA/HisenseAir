@@ -142,7 +142,7 @@ export default {
     } else {
       // seed为false 没获取种子 如果area是gate 仅展示欢迎页 如果是其它(gata_re) 那欢迎页展示之后随即进入浇水第一阶段
       this.seed = false;
-      if (area == "gate") {
+      if (area == "gate" || area == null) {
         // 仅展示欢迎页 不进入浇水阶段
         this.exhibition = false;
         return false;
@@ -162,7 +162,7 @@ export default {
           setTimeout(() => {
             this.seed = true;
             resolve();
-          }, 3000);
+          }, 5000);
         }).then(() => {
           this.growthFun(0, 1);
         });
@@ -223,7 +223,7 @@ export default {
         seed = matchStr.match(createReg("seed"));
 
       return {
-        area: area == null ? "area_one" : area[2],
+        area: area == null ? null : area[2],
         stage: stage == null ? 1 : stage[2],
         sign: sign == null ? false : sign[2],
         patent: patent == null ? null : patent[2],
@@ -300,7 +300,7 @@ export default {
 <style lang="less">
 .welcome-enter-active,
 .welcome-leave-active {
-  transition: opacity 1s linear;
+  transition: opacity 1.5s linear;
 }
 .welcome-enter,
 .welcome-leave-to {
@@ -391,7 +391,7 @@ export default {
       background-repeat: no-repeat;
       p {
         position: absolute;
-        top: 45%;
+        top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         width: 80%;
@@ -400,12 +400,12 @@ export default {
           &:nth-of-type(1) {
             width: 80%;
             opacity: 0;
-            animation: appear 1s ease-out 1 forwards;
+            animation: appear 1s ease-out 2s forwards;
           }
           &:nth-of-type(2) {
             width: 90%;
             opacity: 0;
-            animation: appear 1s ease-out 1s 1 forwards;
+            animation: appear 1s ease-out 3s 1 forwards;
           }
         }
       }
