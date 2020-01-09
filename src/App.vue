@@ -115,12 +115,12 @@ export default {
     if (seed == "true") {
       //  已经获取到种子 不需要再展示欢迎页
       this.seed = true;
+      this.exhibition = true;
 
       // 避免后台第一阶段也传的是true
       if (stage == 1) {
         sign = false;
       }
-
       // 当要播放动画(即要进行浇水动作)的时候 且不是第一阶段 则当前显示阶段要换成stage-1 浇水后变成stage
       if (sign == "true" && stage != 1) {
         stage--;
@@ -144,7 +144,6 @@ export default {
       this.seed = false;
       if (area == "gate" || area == null) {
         // 仅展示欢迎页 不进入浇水阶段
-        this.exhibition = false;
         return false;
       } else {
         // 展示欢迎页 3s后进入浇水阶段stage:1 相应area区域
@@ -158,6 +157,7 @@ export default {
         this.stage = stage;
         this.sign = sign;
         this.patent = patent;
+        this.exhibition = true; // 此步骤晚一点晚一点加载exhibition部分
         new Promise((resolve, reject) => {
           setTimeout(() => {
             this.seed = true;
@@ -170,6 +170,10 @@ export default {
     }
   },
   mounted() {
+    this.$nextTick(() => {
+      console.log(new Date().getTime(), 'mounted-window');
+      // 确保dom异步加载完毕 所有子组件也都一起挂载渲染完毕
+    });
     // sign为true 播放浇水动画
     if (this.sign == "true") {
       let stage = this.stage;
@@ -190,7 +194,7 @@ export default {
       sign: true, // 当前是否播放动画
       patent: 0, // 证书编号
       seed: true, // 是否已获取种子
-      exhibition: true, // 是否继续浇水阶段
+      exhibition: false, // 是否继续浇水阶段
       plantClass: "",
       plantImg: "",
       changePlantClass: "",
