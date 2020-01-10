@@ -164,16 +164,14 @@ export default {
             resolve();
           }, 5000);
         }).then(() => {
-          this.growthFun(0, 1);
+          setTimeout(() => {
+            this.growthFun(0, 1);
+          }, 1000);
         });
       }
     }
   },
   mounted() {
-    this.$nextTick(() => {
-      console.log(new Date().getTime(), 'mounted-window');
-      // 确保dom异步加载完毕 所有子组件也都一起挂载渲染完毕
-    });
     // sign为true 播放浇水动画
     if (this.sign == "true") {
       let stage = this.stage;
@@ -361,20 +359,6 @@ export default {
   }
 }
 
-// 媒体查询兼容iphoneX长屏
-@media only screen and (min-width: 375px) and (min-height: 812px) {
-  .welcome {
-    .content {
-      p {
-        top: 38% !important;
-      }
-      .hand {
-        bottom: 20% !important;
-      }
-    }
-  }
-}
-
 #app {
   width: 100%;
   height: 100%;
@@ -415,7 +399,7 @@ export default {
       }
       .hand {
         position: absolute;
-        bottom: 10%;
+        top: 70%;
         left: 0px;
         width: 95%;
       }
@@ -706,6 +690,20 @@ export default {
       .watering {
         right: 46px;
         bottom: 180px;
+      }
+    }
+  }
+}
+
+// 媒体查询查询的是pt 不是px
+// iphoneX
+@media only screen and (min-device-width: 375px) and (min-device-height: 812px) {
+  #app {
+    .welcome {
+      .content {
+        p {
+          top: 40%;
+        }
       }
     }
   }

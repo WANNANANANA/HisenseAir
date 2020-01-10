@@ -6,7 +6,7 @@
         <img src="../assets/img/cret.png" alt />
       </div>
       <div class="button">
-        <div class="left"></div>
+        <div class="left"><a href="http://open.huizhangongsi.com/hisense/watering/photoIndex"></a></div>
         <div class="right" @click="back"></div>
       </div>
     </div>
@@ -80,6 +80,11 @@ export default {
       background-image: url("../assets/img/btn_sprite.png");
       background-size: 100%;
       background-position: 0px -100px;
+      a {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+      }
     }
     .right {
       width: 82px;
