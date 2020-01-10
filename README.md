@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # hisense_web
 
 ## Project setup
