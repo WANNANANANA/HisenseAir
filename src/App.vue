@@ -7,6 +7,43 @@
             <img src="./assets/img/welcome_text.png" alt />
             <img src="./assets/img/welcome_text2.png" alt />
           </p>
+          <div class="spot">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <img src="./assets/img/seed_active.png" alt class="seed-active" />
           <img src="./assets/img/hand.png" alt class="hand" />
         </div>
       </div>
@@ -63,6 +100,9 @@
           </div>
         </div>
       </footer>
+      <div class="sky">
+        <img src="./assets/img/cloud1.png" alt="">
+      </div>
       <div class="bg">
         <div class="img" v-if="showChangeBg" :style="{backgroundImage: 'url(' + bgReplace + ')'}"></div>
         <transition>
@@ -138,6 +178,9 @@ export default {
       this.patent = patent;
 
       this.growthFun(0, stage);
+
+      console.log(this.patent, this.stage, this.sign, this.area, this.seed);
+
       return false;
     } else {
       // seed为false 没获取种子 如果area是gate 仅展示欢迎页 如果是其它(gata_re) 那欢迎页展示之后随即进入浇水第一阶段
@@ -210,6 +253,7 @@ export default {
       return "stage" + this.stage;
     },
     percent() {
+      console.log(this.wateringFun, this.patent);
       return this.growth - 100 + "%";
     }
   },
@@ -359,6 +403,79 @@ export default {
   }
 }
 
+@keyframes handAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(30%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes seedAppear {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -30%);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes seedFloat {
+  0% {
+    transform: translate(-50%, 0%);
+  }
+  100% {
+    transform: translate(-50%, -6%);
+  }
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes shine1 {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shine2 {
+  0% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(0.7);
+  }
+}
+
+@keyframes shine3 {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.7;
+    transform: scale(0.8);
+  }
+}
+
 #app {
   width: 100%;
   height: 100%;
@@ -379,7 +496,7 @@ export default {
       background-repeat: no-repeat;
       p {
         position: absolute;
-        top: 50%;
+        top: 48%;
         left: 50%;
         transform: translate(-50%, -50%);
         width: 80%;
@@ -388,20 +505,289 @@ export default {
           &:nth-of-type(1) {
             width: 80%;
             opacity: 0;
-            animation: appear 1s ease-out 2s forwards;
+            animation: appear 1s ease-out 3.5s 1 forwards;
           }
           &:nth-of-type(2) {
             width: 90%;
             opacity: 0;
-            animation: appear 1s ease-out 3s 1 forwards;
+            animation: appear 1s ease-out 4.5s 1 forwards;
           }
         }
+      }
+      .seed-active {
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        width: 32%;
+        opacity: 0;
+        animation: seedAppear 1.5s ease-out 1.5s forwards,
+          seedFloat 2s linear 3s infinite alternate;
       }
       .hand {
         position: absolute;
         top: 70%;
         left: 0px;
         width: 95%;
+        animation: handAppear 1s ease-out forwards;
+      }
+      .spot {
+        position: absolute;
+        top: 50%;
+        left: 0px;
+        width: 100%;
+        height: 30%;
+        opacity: 0;
+        animation: show 4s ease-out 1.5s 1 forwards;
+        span {
+          position: absolute;
+          width: 20px;
+          height: 20px;
+          background-image: url("./assets/img/spot.png");
+          background-size: 100%;
+          background-position: 0px 0px;
+          background-repeat: no-repeat;
+          animation: shine1 0.8s linear infinite alternate;
+          &:nth-of-type(1) {
+            width: 20px;
+            height: 20px;
+            top: 36%;
+            left: 32%;
+            animation-name: shine2;
+          }
+          &:nth-of-type(2) {
+            width: 10px;
+            height: 10px;
+            top: 38%;
+            left: 36%;
+            animation-name: shine3;
+          }
+          &:nth-of-type(3) {
+            width: 8px;
+            height: 8px;
+            top: 36%;
+            left: 28%;
+            animation-name: shine1;
+          }
+          &:nth-of-type(4) {
+            width: 8px;
+            height: 8px;
+            top: 30%;
+            left: 38%;
+            animation-name: shine3;
+          }
+          &:nth-of-type(5) {
+            width: 10px;
+            height: 10px;
+            top: 30%;
+            left: 40%;
+            animation-name: shine2;
+          }
+          &:nth-of-type(6) {
+            width: 8px;
+            height: 8px;
+            top: 35%;
+            left: 42%;
+            animation-name: shine1;
+          }
+          &:nth-of-type(7) {
+            width: 8px;
+            height: 8px;
+            top: 26%;
+            left: 33%;
+            animation-name: shine3;
+          }
+          &:nth-of-type(8) {
+            width: 6px;
+            height: 6px;
+            top: 26%;
+            left: 33%;
+            animation-name: shine2;
+          }
+          &:nth-of-type(9) {
+            width: 5px;
+            height: 5px;
+            top: 27%;
+            left: 32%;
+            animation-name: shine1;
+          }
+          &:nth-of-type(10) {
+            width: 25px;
+            height: 25px;
+            top: 25%;
+            left: 50%;
+            animation-name: shine3;
+          }
+          &:nth-of-type(11) {
+            width: 10px;
+            height: 10px;
+            top: 34%;
+            left: 56%;
+            animation-name: shine2;
+          }
+          &:nth-of-type(12) {
+            width: 8px;
+            height: 8px;
+            top: 40%;
+            left: 60%;
+            animation-name: shine1;
+          }
+          &:nth-of-type(13) {
+            width: 15px;
+            height: 15px;
+            top: 37%;
+            left: 62%;
+            animation-name: shine3;
+          }
+          &:nth-of-type(14) {
+            width: 5px;
+            height: 5px;
+            top: 42%;
+            left: 65%;
+            animation-name: shine2;
+          }
+
+          &:nth-of-type(15) {
+            width: 20px;
+            height: 20px;
+            top: 34%;
+            left: 70%;
+            animation-name: shine1;
+          }
+          &:nth-of-type(16) {
+            width: 18px;
+            height: 18px;
+            top: 30%;
+            left: 78%;
+            animation-name: shine3;
+          }
+          &:nth-of-type(17) {
+            width: 18px;
+            height: 18px;
+            top: 30%;
+            left: 92%;
+            animation-name: shine2;
+          }
+          &:nth-of-type(18) {
+            width: 8px;
+            height: 8px;
+            top: 24%;
+            left: 94%;
+            animation-name: shine3;
+          }
+          &:nth-of-type(19) {
+            width: 12px;
+            height: 12px;
+            top: 22%;
+            left: 96%;
+            animation-name: shine1;
+          }
+          &:nth-of-type(20) {
+            width: 6px;
+            height: 6px;
+            top: 42%;
+            left: 96%;
+            animation-name: shine2;
+          }
+          &:nth-of-type(21) {
+            width: 12px;
+            height: 12px;
+            top: 12%;
+            left: 2%;
+            animation-name: shine3;
+          }
+          &:nth-of-type(22) {
+            width: 8px;
+            height: 8px;
+            top: 14%;
+            left: 6%;
+            animation-name: shine1;
+          }
+
+          &:nth-of-type(23) {
+            width: 30px;
+            height: 30px;
+            top: 44%;
+            left: 6%;
+            animation-name: shine2;
+          }
+          &:nth-of-type(24) {
+            width: 10px;
+            height: 10px;
+            top: 54%;
+            left: 4%;
+            animation-name: shine3;
+          }
+          &:nth-of-type(25) {
+            width: 8px;
+            height: 8px;
+            top: 57%;
+            left: 5%;
+            animation-name: shine1;
+          }
+          &:nth-of-type(26) {
+            width: 30px;
+            height: 30px;
+            top: 86%;
+            left: 40%;
+            animation-name: shine2;
+          }
+          &:nth-of-type(27) {
+            width: 26px;
+            height: 26px;
+            top: 85%;
+            left: 43%;
+            animation-name: shine3;
+          }
+          &:nth-of-type(28) {
+            width: 10px;
+            height: 10px;
+            top: 72%;
+            left: 40%;
+            animation-name: shine1;
+          }
+          &:nth-of-type(29) {
+            width: 16px;
+            height: 16px;
+            top: 82%;
+            left: 36%;
+            animation-name: shine2;
+          }
+          &:nth-of-type(30) {
+            width: 12px;
+            height: 12px;
+            top: 80%;
+            left: 36%;
+            animation-name: shine3;
+          }
+          &:nth-of-type(31) {
+            width: 15px;
+            height: 15px;
+            top: 80%;
+            left: 39%;
+            animation-name: shine1;
+          }
+          &:nth-of-type(32) {
+            width: 10px;
+            height: 10px;
+            top: 86%;
+            left: 56%;
+            animation-name: shine2;
+          }
+          &:nth-of-type(33) {
+            width: 8px;
+            height: 8px;
+            top: 82%;
+            left: 50%;
+            animation-name: shine3;
+          }
+          &:nth-of-type(34) {
+            width: 20px;
+            height: 20px;
+            top: 76%;
+            left: 50%;
+            animation-name: shine1;
+          }
+        }
       }
     }
   }
@@ -636,6 +1022,20 @@ export default {
         }
       }
     }
+    .sky {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      z-index: -9;
+      width: 100%;
+      height: 100%;
+      img {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        width: 30%;
+      }
+    }
     .bg {
       position: absolute;
       top: 0px;
@@ -695,17 +1095,17 @@ export default {
   }
 }
 
-// 媒体查询查询的是pt 不是px                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+// 媒体查询查询的是pt 不是px
 // iphoneX
-@media only screen and (min-device-width: 375px) and (min-device-height: 812px) {
-  #app {
-    .welcome {
-      .content {
-        p {
-          top: 40%;
-        }
-      }
-    }
-  }
-}
+// @media only screen and (min-device-width: 375px) and (min-device-height: 812px) {
+//   #app {
+//     .welcome {
+//       .content {
+//         p {
+//           top: 40%;
+//         }
+//       }
+//     }
+//   }
+// }
 </style>
