@@ -101,7 +101,12 @@
         </div>
       </footer>
       <div class="sky">
-        <img src="./assets/img/cloud1.png" alt="">
+        <div class="sunshine"></div>
+        <div class="cloud">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </div>
       <div class="bg">
         <div class="img" v-if="showChangeBg" :style="{backgroundImage: 'url(' + bgReplace + ')'}"></div>
@@ -473,6 +478,36 @@ export default {
   100% {
     opacity: 0.7;
     transform: scale(0.8);
+  }
+}
+
+@keyframes cloud1 {
+  0% {
+    left: -30%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes cloud2 {
+  0% {
+    right: -30%;
+  }
+  100% {
+    right: 100%;
+  }
+}
+
+@keyframes sunshine {
+  0% {
+    background-image: url("./assets/img/sunshine1.png");
+  }
+  33% {
+    background-image: url("./assets/img/sunshine2.png");
+  }
+  100% {
+    background-image: url("./assets/img/sunshine3.png");
   }
 }
 
@@ -1029,11 +1064,48 @@ export default {
       z-index: -9;
       width: 100%;
       height: 100%;
-      img {
+      overflow: hidden;
+      .sunshine {
         position: absolute;
-        top: 40%;
-        left: 50%;
-        width: 30%;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        animation: sunshine 2s linear infinite alternate;
+      }
+      .cloud {
+        width: 100%;
+        height: 100%;
+        span {
+          position: absolute;
+          background-image: url("./assets/img/cloud_sprite.png");
+          background-size: 100%;
+          background-repeat: no-repeat;
+          &:nth-of-type(1) {
+            top: 20%;
+            left: -50%;
+            width: 126px;
+            height: 46px;
+            background-position: 0px -94px;
+            animation: cloud1 45s linear 10s infinite;
+          }
+          &:nth-of-type(2) {
+            top: 38%;
+            width: 150px;
+            height: 55px;
+            background-position: 0px 0px;
+            animation: cloud2 40s linear infinite;
+          }
+          &:nth-of-type(3) {
+            top: 48%;
+            width: 130px;
+            height: 46px;
+            background-position: 0px -54px;
+            animation: cloud1 45s linear infinite;
+          }
+        }
       }
     }
     .bg {
