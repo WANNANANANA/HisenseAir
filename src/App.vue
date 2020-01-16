@@ -194,7 +194,7 @@ export default {
         // 仅展示欢迎页 不进入浇水阶段
         return false;
       } else {
-        // 展示欢迎页 3s后进入浇水阶段stage:1 相应area区域
+        // 展示欢迎页 然后进入浇水阶段stage:1 相应area区域
         stage = 1;
         sign = false;
 
@@ -210,7 +210,7 @@ export default {
           setTimeout(() => {
             this.seed = true;
             resolve();
-          }, 5000);
+          }, 8000);
         }).then(() => {
           setTimeout(() => {
             this.growthFun(0, 1);
@@ -540,12 +540,12 @@ export default {
           &:nth-of-type(1) {
             width: 80%;
             opacity: 0;
-            animation: appear 1s ease-out 3.5s 1 forwards;
+            animation: appear 1s ease-out 4s 1 forwards;
           }
           &:nth-of-type(2) {
             width: 90%;
             opacity: 0;
-            animation: appear 1s ease-out 4.5s 1 forwards;
+            animation: appear 1s ease-out 5s 1 forwards;
           }
         }
       }
