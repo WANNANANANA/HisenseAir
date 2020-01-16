@@ -1,13 +1,25 @@
 <template>
   <div id="app" :class="stageClass">
+    <div class="loading" v-if="loading">
+      <span></span>
+      <p>正在加载</p>
+    </div>
     <transition name="welcome">
       <div v-if="!seed" class="welcome">
         <div class="content">
           <p>
-            <img src="./assets/img/welcome_text.png" alt />
-            <img src="./assets/img/welcome_text2.png" alt />
+            <img
+              src="./assets/img/welcome_text.png"
+              alt
+              :style="{animationPlayState: animationPlayState}"
+            />
+            <img
+              src="./assets/img/welcome_text2.png"
+              alt
+              :style="{animationPlayState: animationPlayState}"
+            />
           </p>
-          <div class="spot">
+          <div class="spot" :style="{animationPlayState: animationPlayState}">
             <span></span>
             <span></span>
             <span></span>
@@ -43,8 +55,18 @@
             <span></span>
             <span></span>
           </div>
-          <img src="./assets/img/seed_active.png" alt class="seed-active" />
-          <img src="./assets/img/hand.png" alt class="hand" />
+          <img
+            src="./assets/img/seed_active.png"
+            alt
+            class="seed-active"
+            :style="{animationPlayState: animationPlayState}"
+          />
+          <img
+            src="./assets/img/hand.png"
+            alt
+            class="hand"
+            :style="{ animationPlayState: animationPlayState}"
+          />
         </div>
       </div>
     </transition>
@@ -153,8 +175,8 @@ export default {
         require("./assets/img/branch_bg.png"),
         require("./assets/img/tree_bg.png"),
         require("./assets/img/tree_bg.png")
-      ];
-    let search = window.location.search.slice(1),
+      ],
+      search = window.location.search.slice(1),
       { area, stage, sign, patent, seed } = this.getParams(search); // String类型
 
     if (seed == "true") {
@@ -178,27 +200,21 @@ export default {
         this.plantClass = plantArr[stage - 1].name;
         this.plantImg = plantArr[stage - 1].img;
         this.bg = bgArr[stage - 1];
-        this.growthFun(0, stage);
       }
+
       this.area = area;
       this.stage = stage;
       this.sign = sign;
       this.patent = patent;
 
-      console.log(this.patent, this.stage, this.sign, this.area, this.seed);
-
-      if (sign == "true") {
-        setTimeout(() => {
-          this.wateringFun();
-        }, stage * 1500);
-      }
-
       return false;
     } else {
       // seed为false 没获取种子 如果area是gate 仅展示欢迎页 如果是其它 那欢迎页展示之后随即进入浇水第一阶段
       this.seed = false;
+
       if (area == "gate" || area == null) {
         // 仅展示欢迎页 不进入浇水阶段
+        this.area = "gate";
         return false;
       } else {
         // 展示欢迎页 然后进入stage:1 相应area区域 并且浇水
@@ -216,29 +232,60 @@ export default {
         this.stage = stage;
         this.sign = sign;
         this.patent = patent;
-        this.exhibition = true; // 此步骤晚一点晚一点加载exhibition部分
-        new Promise((resolve, reject) => {
-          setTimeout(() => {
-            this.seed = true;
-            resolve();
-          }, 8000);
-        }).then(() => {
-          setTimeout(() => {
-            this.wateringFun();
-          }, 3000);
-        });
       }
     }
   },
+  mounted() {
+    let seed = this.seed,
+      sign = this.sign,
+      stage = this.stage,
+      area = this.area;
+
+    console.log(this.patent, this.stage, this.sign, this.area, this.seed);
+
+    window.onload = () => {
+      this.loading = false;
+      this.animationPlayState = "running";
+
+      if (seed) {
+        if (stage != 0) {
+          this.growthFun(0, stage);
+        }
+
+        if (sign == "true") {
+          setTimeout(() => {
+            this.wateringFun();
+          }, stage * 1500);
+        }
+
+        return false;
+      } else {
+        if (area != "gate") {
+          this.exhibition = true; // 此步骤晚一点 晚一点加载exhibition部分
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              this.seed = true;
+              resolve();
+            }, 8000);
+          }).then(() => {
+            setTimeout(() => {
+              this.wateringFun();
+            }, 3000);
+          });
+        }
+      }
+    };
+  },
   data() {
     return {
-      init: false, // 由于第一阶段也要浇水，但是浇了后不改变状态，由此使用init进行判定
+      loading: true,
+      animationPlayState: "paused",
       bg: "",
       bgReplace: "",
       showChangeBg: false,
       changeBg: false,
       showBlurBg: false,
-      area: "area_one", // 当前区域
+      area: "", // 当前区域
       stage: 1, // 将到达的目标阶段
       sign: false, // 当前是否播放动画
       patent: 0, // 证书编号
@@ -513,9 +560,51 @@ export default {
   }
 }
 
+@keyframes loading {
+  0% {
+    transform: rotateZ(0);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+
 #app {
   width: 100%;
   height: 100%;
+
+  .loading {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 66;
+    background: #ccc;
+    span {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      margin-top: -30px;
+      margin-left: -10px;
+      background-image: url("./assets/img/loading.png");
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      animation: loading 1s linear infinite;
+    }
+    p {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, 0%);
+      font-size: 14px;
+      color: #0d7c7c;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+  }
 
   .welcome {
     position: absolute;
