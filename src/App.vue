@@ -162,41 +162,52 @@ export default {
       this.seed = true;
       this.exhibition = true;
 
-      // 避免后台第一阶段也传的是true
-      if (stage == 1) {
-        sign = false;
-      }
       // 当要播放动画(即要进行浇水动作)的时候 且不是第一阶段 则当前显示阶段要换成stage-1 浇水后变成stage
-      if (sign == "true" && stage != 1) {
+      if (sign == "true") {
         stage--;
         this.showChangeBg = true;
         this.bgReplace = bgArr[stage];
         this.changePlantClass = plantArr[stage].name;
         this.changePlantImg = plantArr[stage].img;
       }
-      this.plantClass = plantArr[stage - 1].name;
-      this.plantImg = plantArr[stage - 1].img;
-      this.bg = bgArr[stage - 1];
+      if (stage == 0) {
+        this.plantClass = plantArr[0].name;
+        this.plantImg = plantArr[0].img;
+        this.bg = bgArr[0];
+      } else {
+        this.plantClass = plantArr[stage - 1].name;
+        this.plantImg = plantArr[stage - 1].img;
+        this.bg = bgArr[stage - 1];
+        this.growthFun(0, stage);
+      }
       this.area = area;
       this.stage = stage;
       this.sign = sign;
       this.patent = patent;
 
-      this.growthFun(0, stage);
-
       console.log(this.patent, this.stage, this.sign, this.area, this.seed);
+
+      if (sign == "true") {
+        setTimeout(() => {
+          this.wateringFun();
+        }, stage * 1500);
+      }
 
       return false;
     } else {
-      // seed为false 没获取种子 如果area是gate 仅展示欢迎页 如果是其它(gata_re) 那欢迎页展示之后随即进入浇水第一阶段
+      // seed为false 没获取种子 如果area是gate 仅展示欢迎页 如果是其它 那欢迎页展示之后随即进入浇水第一阶段
       this.seed = false;
       if (area == "gate" || area == null) {
         // 仅展示欢迎页 不进入浇水阶段
         return false;
       } else {
-        // 展示欢迎页 然后进入浇水阶段stage:1 相应area区域
-        stage = 1;
-        sign = false;
+        // 展示欢迎页 然后进入stage:1 相应area区域 并且浇水
+        stage = 0;
+
+        this.showChangeBg = true;
+        this.bgReplace = bgArr[0];
+        this.changePlantClass = plantArr[0].name;
+        this.changePlantImg = plantArr[0].img;
 
         this.plantClass = plantArr[0].name;
         this.plantImg = plantArr[0].img;
@@ -213,23 +224,15 @@ export default {
           }, 8000);
         }).then(() => {
           setTimeout(() => {
-            this.growthFun(0, 1);
-          }, 1000);
+            this.wateringFun();
+          }, 3000);
         });
       }
     }
   },
-  mounted() {
-    // sign为true 播放浇水动画
-    if (this.sign == "true") {
-      let stage = this.stage;
-      setTimeout(() => {
-        this.wateringFun();
-      }, stage * 1500);
-    }
-  },
   data() {
     return {
+      init: false, // 由于第一阶段也要浇水，但是浇了后不改变状态，由此使用init进行判定
       bg: "",
       bgReplace: "",
       showChangeBg: false,
@@ -237,7 +240,7 @@ export default {
       showBlurBg: false,
       area: "area_one", // 当前区域
       stage: 1, // 将到达的目标阶段
-      sign: true, // 当前是否播放动画
+      sign: false, // 当前是否播放动画
       patent: 0, // 证书编号
       seed: true, // 是否已获取种子
       exhibition: false, // 是否继续浇水阶段
@@ -258,7 +261,6 @@ export default {
       return "stage" + this.stage;
     },
     percent() {
-      console.log(this.wateringFun, this.patent);
       return this.growth - 100 + "%";
     }
   },
@@ -1133,6 +1135,7 @@ export default {
     }
   }
 
+  &.stage0,
   &.stage1 {
     main {
       .watering {
