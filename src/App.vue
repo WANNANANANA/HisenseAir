@@ -646,7 +646,8 @@ export default {
     z-index: 20;
     width: 100%;
     height: 100%;
-    background-image: url("./assets/img/welcome_bg.png");
+    // background-image: url("./assets/img/welcome_bg.png");
+    background-image: url('./assets/img/share.png');
     background-size: 100%;
     background-repeat: no-repeat;
     background-color: #16201f;
@@ -660,10 +661,10 @@ export default {
     }
     .img {
       position: absolute;
-      bottom: 3%;
+      top: 64%;
       left: 50%;
-      width: 76%;
-      transform: translate(-50%, 0);
+      width: 70%;
+      transform: translate(-50%, -50%);
       img {
         width: 100%;
       }
@@ -1331,15 +1332,21 @@ export default {
 
 // 媒体查询查询的是pt 不是px
 // iphoneX
-// @media only screen and (min-device-width: 375px) and (min-device-height: 812px) {
-//   #app {
-//     .welcome {
-//       .content {
-//         p {
-//           top: 40%;
-//         }
-//       }
-//     }
-//   }
-// }
+@media only screen and (min-device-width: 375px) and (min-device-height: 812px) {
+  #app {
+    .share {
+      .img {
+        top: 60%;
+        width: 78%;
+      }
+    }
+    .welcome {
+      .content {
+        p {
+          top: 40%;
+        }
+      }
+    }
+  }
+}
 </style>
