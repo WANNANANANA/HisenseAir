@@ -1,8 +1,8 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
-    outputDir: 'dist',
-    // publicPath: '/hisenseAir',
+    // outputDir: 'dist',
+    publicPath: '/hisenseAir',
     configureWebpack: {
         plugins: [
             new CopyWebpackPlugin([

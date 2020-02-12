@@ -12,9 +12,9 @@ new Vue({
     render: h => h(App)
 }).$mount('#app')
 
-const link = window.location.href;
-
-// console.log(App.data().stage);
+const link = window.location.href,
+    search = window.location.search.slice(1),
+    stage = search.match(/(^|&)stage=([^&]*)(&|$)/) == null ? null : stage[2];
 
 function successFun(data) {
     data = JSON.parse(data);
@@ -33,28 +33,28 @@ function successFun(data) {
     });
 
     wx.ready(function() {
-        //     // var shareData = {
-        //     //     title: '海信中央空调智慧体验中心', // 分享标题  
-        //     //     desc: '聚集能量,植树为善', // 分享描述   
-        //     //     link: link, // 分享链接   
-        //     //     imgUrl: 'http://www.huizhangongsi.com/hisenseAir/img/logo.png', // 分享图片
-        //     //     success: function() {
-        //     //         return false;
-        //     //     },
-        //     //     cancel: function() {
-        //     //         return false;
-        //     //     }
-        //     // };
-
-        //     // //  分享给朋友及分享到QQ
-        //     // wx.updateAppMessageShareData(shareData);
-        //     // // 分享到朋友圈及分享到QQ空间
-        //     // wx.updateTimelineShareData(shareData);
-
-        wx.hideMenuItems({
-            menuList: ["menuItem:share:appMessage", "menuItem:share:timeline"]
-        });
-
+        if (stage == 5) {
+            var shareData = {
+                title: '海信中央空调智慧体验中心', // 分享标题  
+                desc: '聚集能量,植树为善', // 分享描述   
+                link: link, // 分享链接   
+                imgUrl: 'http://www.huizhangongsi.com/hisenseAir/img/logo.png', // 分享图片
+                success: function() {
+                    return false;
+                },
+                cancel: function() {
+                    return false;
+                }
+            };
+            //  分享给朋友及分享到QQ
+            wx.updateAppMessageShareData(shareData);
+            // 分享到朋友圈及分享到QQ空间
+            wx.updateTimelineShareData(shareData);
+        } else {
+            wx.hideMenuItems({
+                menuList: ["menuItem:share:appMessage", "menuItem:share:timeline", "menuItem:share:qq", "menuItem:share:weiboApp", "menuItem:share:QZone"]
+            });
+        }
     })
 }
 
