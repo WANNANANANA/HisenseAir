@@ -38,7 +38,7 @@ function successFun(data) {
                 title: '海信中央空调智慧体验中心', // 分享标题  
                 desc: '聚集能量,植树为善', // 分享描述   
                 link: link, // 分享链接   
-                imgUrl: 'http://www.huizhangongsi.com/hisenseAir/img/logo.png', // 分享图片
+                imgUrl: 'http://www.huizhangongsi.com/hisenseAir/logo.png', // 分享图片
                 success: function() {
                     return false;
                 },
