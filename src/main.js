@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import './assets/style/reset.css'
 import 'script-loader!./assets/js/wx'
-import { ajax } from './assets/js/ajax'
+import axios from 'axios'
 
 Vue.config.productionTip = false
 
@@ -59,4 +59,8 @@ function successFun(data) {
     })
 }
 
-ajax({ url: './wx_api/api.php', ajaxData: { url: link }, success: successFun });
+axios.get('./wx_api/api.php', {
+    params: {
+        url: link
+    }
+}).then(successFun)
