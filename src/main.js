@@ -12,9 +12,10 @@ new Vue({
     render: h => h(App)
 }).$mount('#app')
 
-const link = window.location.href,
+let link = window.location.href,
     search = window.location.search.slice(1),
-    stage = search.match(/(^|&)stage=([^&]*)(&|$)/) == null ? null : stage[2];
+    stage = search.match(/(^|&)stage=([^&]*)(&|$)/);
+stage = stage == null ? null : stage[2];
 
 function successFun(data) {
     data = JSON.parse(data);
