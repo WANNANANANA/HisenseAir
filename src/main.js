@@ -18,7 +18,7 @@ let link = window.location.href,
 stage = stage == null ? null : stage[2];
 
 function successFun(data) {
-    data = JSON.parse(data);
+    data = data.data;
     var app_id = data.app_id;
     var timestamp = data.timestamp;
     var noncestr = data.noncestr;
