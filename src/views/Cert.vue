@@ -1,16 +1,20 @@
 <template>
-  <div class="cert">
-    <div class="show">
-      <div class="pic">
-        <p>证书编号：{{cretNum}}</p>
-        <img src="../assets/img/cret.png" alt />
-      </div>
-      <div class="button">
-        <div class="left"><a href="http://open.huizhangongsi.com/hisense/watering/photoIndex"></a></div>
-        <div class="right" @click="back"></div>
+  <transition name="left-enter">
+    <div class="cert">
+      <div class="show">
+        <div class="pic">
+          <p>证书编号：{{cretNum}}</p>
+          <img src="../assets/img/cret.png" alt />
+        </div>
+        <div class="button">
+          <div class="left">
+            <a href="http://open.huizhangongsi.com/hisense/watering/photoIndex"></a>
+          </div>
+          <div class="right" @click="back"></div>
+        </div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -34,6 +38,20 @@ export default {
 };
 </script>
 <style lang="less">
+.left-enter-enter,
+.left-enter-leave-to {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+.left-enter-enter-to,
+.left-enter-leave {
+  transform: translateX(0);
+  opacity: 1;
+}
+.left-enter-enter-active,
+.left-enter-leave-active {
+  transition: all 0.3s linear;
+}
 .cert {
   position: absolute;
   top: 0px;

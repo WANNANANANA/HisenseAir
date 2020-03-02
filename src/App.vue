@@ -4,6 +4,12 @@
       <span></span>
       <p>正在加载</p>
     </div>
+    <div class="share" v-if="from">
+      <div class="img">
+        <p class="text">证书编号：{{patent}}</p>
+        <img src="./assets/img/cret.png" alt />
+      </div>
+    </div>
     <transition name="welcome">
       <div v-if="!seed" class="welcome">
         <div class="content">
@@ -76,7 +82,8 @@
       </keep-alive>
       <introduction :stageClass="stageClass" :area="area"></introduction>
       <div class="icon">
-        <router-link v-if="stage == 5" :to="'/cert/' + patent" class="left" tag="div"></router-link>
+        <router-link v-if="stage != 5" :to="'/total/' + none" class="left icon-total" tag="div"></router-link>
+        <router-link v-if="stage == 5" :to="'/cert/' + patent" class="left icon-cret" tag="div"></router-link>
         <router-link to="/about" class="right" tag="div" @click.native="showAboutFun"></router-link>
       </div>
       <main>
@@ -177,8 +184,14 @@ export default {
         require("./assets/img/tree_bg.png")
       ],
       search = window.location.search.slice(1),
-      { area, stage, sign, patent, seed } = this.getParams(search); // String类型
+      { area, stage, sign, patent, seed, none, from } = this.getParams(search); // String类型
 
+    if(from) {
+      // 点击分享进入
+      this.from = from;
+      this.patent = patent;
+      return false;
+    }
     if (seed == "true") {
       //  已经获取到种子 不需要再展示欢迎页
       this.seed = true;
@@ -206,6 +219,7 @@ export default {
       this.stage = stage;
       this.sign = sign;
       this.patent = patent;
+      this.none = none;
 
       return false;
     } else {
@@ -232,18 +246,32 @@ export default {
         this.stage = stage;
         this.sign = sign;
         this.patent = patent;
+        this.none = none;
       }
     }
   },
   mounted() {
-    let seed = this.seed,
+    let from = this.from,
+      seed = this.seed,
       sign = this.sign,
       stage = this.stage,
       area = this.area;
 
-    console.log(this.patent, this.stage, this.sign, this.area, this.seed);
+    console.log(
+      this.patent,
+      this.stage,
+      this.sign,
+      this.area,
+      this.seed,
+      this.none,
+      this.from
+    );
 
     window.onload = () => {
+      if(from) {
+        this.loading = false;
+        return false;
+      }
       this.loading = false;
       this.animationPlayState = "running";
 
@@ -285,6 +313,8 @@ export default {
       showChangeBg: false,
       changeBg: false,
       showBlurBg: false,
+      from: false, // 是否是通过分享进入
+      none: "", // 没去过的区域
       area: "", // 当前区域
       stage: 1, // 将到达的目标阶段
       sign: false, // 当前是否播放动画
@@ -320,14 +350,18 @@ export default {
         stage = matchStr.match(createReg("stage")),
         sign = matchStr.match(createReg("sign")),
         patent = matchStr.match(createReg("patent")),
-        seed = matchStr.match(createReg("seed"));
+        seed = matchStr.match(createReg("seed")),
+        none = matchStr.match(createReg("none")),
+        from = matchStr.indexOf('from');
 
       return {
         area: area == null ? null : area[2],
         stage: stage == null ? 1 : stage[2],
         sign: sign == null ? false : sign[2],
         patent: patent == null ? null : patent[2],
-        seed: seed == null ? true : seed[2]
+        seed: seed == null ? true : seed[2],
+        none: none == null ? null : none[2],
+        from: from == -1 ? false : true
       };
     },
     wateringFun() {
@@ -603,6 +637,37 @@ export default {
       color: #0d7c7c;
       font-weight: bold;
       letter-spacing: 1px;
+    }
+  }
+  .share {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 20;
+    width: 100%;
+    height: 100%;
+    // background-image: url("./assets/img/welcome_bg.png");
+    background-image: url('./assets/img/share.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-color: #16201f;
+    .text {
+      position: absolute;
+      left: 0px;
+      bottom: 10%;
+      width: 100%;
+      text-align: center;
+      font-size: 12px;
+    }
+    .img {
+      position: absolute;
+      top: 64%;
+      left: 50%;
+      width: 70%;
+      transform: translate(-50%, -50%);
+      img {
+        width: 100%;
+      }
     }
   }
 
@@ -939,8 +1004,14 @@ export default {
         background-size: 100% 100%;
         &.left {
           float: left;
-          width: 76px;
-          background-image: url("./assets/img/icon_left.png");
+          &.icon-cret {
+            background-image: url("./assets/img/icon_cret.png");
+            width: 76px;
+          }
+          &.icon-total {
+            width: 51px;
+            background-image: url("./assets/img/icon_total.png");
+          }
         }
         &.right {
           float: right;
@@ -1261,15 +1332,21 @@ export default {
 
 // 媒体查询查询的是pt 不是px
 // iphoneX
-// @media only screen and (min-device-width: 375px) and (min-device-height: 812px) {
-//   #app {
-//     .welcome {
-//       .content {
-//         p {
-//           top: 40%;
-//         }
-//       }
-//     }
-//   }
-// }
+@media only screen and (min-device-width: 375px) and (min-device-height: 812px) {
+  #app {
+    .share {
+      .img {
+        top: 60%;
+        width: 78%;
+      }
+    }
+    .welcome {
+      .content {
+        p {
+          top: 40%;
+        }
+      }
+    }
+  }
+}
 </style>
