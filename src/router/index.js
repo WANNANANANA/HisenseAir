@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import About from '../views/About.vue'
 import Total from '../views/Total.vue'
+import Cert from '../views/Cert.vue'
 
 Vue.use(VueRouter)
 
@@ -11,8 +12,8 @@ export default new VueRouter({
     routes: [{
             path: '/cert/:id',
             name: 'cert',
-            component: () =>
-                import ('../views/Cert.vue')
+            component: Cert
+            // component: () => import ('../views/Cert.vue')
         },
         {
             path: '/about',
