@@ -7,7 +7,7 @@ import Cert from '../views/Cert.vue'
 Vue.use(VueRouter)
 
 export default new VueRouter({
-    mode: 'history',
+    // mode: 'history',
     base: process.env.BASE_URL,
     routes: [{
             path: '/cert/:id',
