@@ -4,9 +4,10 @@
       <h3 class="title">能量收集说明</h3>
       <div class="content">
         <div class="text">
-          <p>1、扫描各展区均可获得20%的能量，随着能量的增加种子渐渐生长;</p>
+          <!-- <p>1、扫描各展区均可获得20%的能量，随着能量的增加种子渐渐生长;</p>
           <p>2、直到所有的展区均扫描完成可获得100%的能量，种子成长为大树，大树旁边生成证书小图标，点开图标即为绿色先行者证书;</p>
-          <p>3、证书可保存至手机，点击证书下方的“上传图片”按钮即可上传自己的照片进行打印。</p>
+          <p>3、证书可保存至手机，点击证书下方的“上传图片”按钮即可上传自己的照片进行打印。</p> -->
+          <img src="../assets/img/about.png" alt="">
         </div>
         <div class="back" @click="back"></div>
       </div>
@@ -47,7 +48,7 @@ export default {
       .text {
         height: 80%;
         padding: 0 2%;
-        border: 1px solid rgba(60, 212, 0, 0.3);
+        // border: 1px solid rgba(60, 212, 0, 0.3);
         border-radius: 6px;
         overflow: scroll;
         p {
