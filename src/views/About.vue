@@ -50,13 +50,17 @@ export default {
         padding: 0 2%;
         // border: 1px solid rgba(60, 212, 0, 0.3);
         border-radius: 6px;
-        overflow: scroll;
-        p {
-          color: #4c4c4c;
-          font-size: 14px;
-          margin-top: 12px;
-          text-indent: 2em;
-          padding: 0px;
+        // overflow: scroll;
+        text-align: center;
+        // p {
+        //   color: #4c4c4c;
+        //   font-size: 14px;
+        //   margin-top: 12px;
+        //   text-indent: 2em;
+        //   padding: 0px;
+        // }
+        img {
+          height: 100%;
         }
       }
       .back {
