@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import './assets/style/reset.css'
-import 'script-loader!./assets/js/wx'
+import wx from 'weixin-js-sdk'
 import axios from 'axios'
 
 Vue.config.productionTip = false
@@ -19,10 +19,10 @@ stage = stage == null ? null : stage[2];
 
 function successFun(data) {
     data = data.data;
-    var app_id = data.app_id;
-    var timestamp = data.timestamp;
-    var noncestr = data.noncestr;
-    var signature = data.signature;
+    let app_id = data.app_id;
+    let timestamp = data.timestamp;
+    let noncestr = data.noncestr;
+    let signature = data.signature;
     wx.config({
         debug: false,
         appId: app_id,
@@ -35,7 +35,7 @@ function successFun(data) {
 
     wx.ready(function() {
         if (stage == 5) {
-            var shareData = {
+            let shareData = {
                 title: '海信中央空调智慧体验中心', // 分享标题  
                 desc: '聚集能量,植树为善', // 分享描述   
                 link: link, // 分享链接   
@@ -59,7 +59,7 @@ function successFun(data) {
     })
 }
 
-axios.get('./wx_api/api.php', {
+axios.get('../wx_api/api.php', {
     params: {
         url: link
     }
