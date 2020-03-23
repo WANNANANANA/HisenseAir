@@ -59,7 +59,7 @@ function successFun(data) {
     })
 }
 
-axios.get('../wx_api/api.php', {
+axios.get('./wx_api/api.php', {
     params: {
         url: link
     }
