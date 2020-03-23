@@ -6,7 +6,18 @@
     </div>
     <div class="share" v-if="from">
       <div class="img">
-        <p class="text">证书编号：{{patent}}</p>
+        <p class="nickname">
+          捐赠人：
+          <span>{{nickname}}</span>
+        </p>
+        <p class="patent">
+          证书编号：
+          <span>{{patent}}</span>
+        </p>
+        <p class="date">
+          日期：
+          <span>{{p_date}}</span>
+        </p>
         <img src="./assets/img/cret.png" alt />
       </div>
     </div>
@@ -83,7 +94,12 @@
       <introduction :stageClass="stageClass" :area="area"></introduction>
       <div class="icon">
         <router-link v-if="stage != 5" :to="'/total/' + none" class="left icon-total" tag="div"></router-link>
-        <router-link v-if="stage == 5" :to="'/cert/' + patent" class="left icon-cret" tag="div"></router-link>
+        <router-link
+          v-if="stage == 5"
+          :to="'/cert/' + patent + '/' + nickname + '/' + p_date"
+          class="left icon-cret"
+          tag="div"
+        ></router-link>
         <router-link to="/about" class="right" tag="div" @click.native="showAboutFun"></router-link>
       </div>
       <main>
@@ -184,12 +200,24 @@ export default {
         require("./assets/img/tree_bg.png")
       ],
       search = window.location.search.slice(1),
-      { area, stage, sign, patent, seed, none, from } = this.getParams(search); // String类型
+      {
+        area,
+        stage,
+        sign,
+        patent,
+        nickname,
+        p_date,
+        seed,
+        none,
+        from
+      } = this.getParams(search); // String类型
 
-    if(from) {
+    if (from) {
       // 点击分享进入
       this.from = from;
       this.patent = patent;
+      this.nickname = nickname;
+      this.p_date = p_date;
       return false;
     }
     if (seed == "true") {
@@ -219,6 +247,8 @@ export default {
       this.stage = stage;
       this.sign = sign;
       this.patent = patent;
+      this.nickname = nickname;
+      this.p_date = p_date;
       this.none = none;
 
       return false;
@@ -246,6 +276,8 @@ export default {
         this.stage = stage;
         this.sign = sign;
         this.patent = patent;
+        this.nickname = nickname;
+        this.p_date = p_date;
         this.none = none;
       }
     }
@@ -259,6 +291,8 @@ export default {
 
     console.log(
       this.patent,
+      this.nickname,
+      this.p_date,
       this.stage,
       this.sign,
       this.area,
@@ -268,7 +302,7 @@ export default {
     );
 
     window.onload = () => {
-      if(from) {
+      if (from) {
         this.loading = false;
         return false;
       }
@@ -319,6 +353,8 @@ export default {
       stage: 1, // 将到达的目标阶段
       sign: false, // 当前是否播放动画
       patent: 0, // 证书编号
+      nickname: "", // 微信昵称
+      p_date: "", // 获得证书的日期
       seed: true, // 是否已获取种子
       exhibition: false, // 是否继续浇水阶段
       plantClass: "",
@@ -350,15 +386,19 @@ export default {
         stage = matchStr.match(createReg("stage")),
         sign = matchStr.match(createReg("sign")),
         patent = matchStr.match(createReg("patent")),
+        nickname = matchStr.match(createReg("nickname")),
+        p_date = matchStr.match(createReg("p_date")),
         seed = matchStr.match(createReg("seed")),
         none = matchStr.match(createReg("none")),
-        from = matchStr.indexOf('from');
+        from = matchStr.indexOf("from");
 
       return {
         area: area == null ? null : area[2],
         stage: stage == null ? 1 : stage[2],
         sign: sign == null ? false : sign[2],
         patent: patent == null ? null : patent[2],
+        nickname: nickname == null ? "绿色先行者" : nickname[2],
+        p_date: p_date == null ? null : p_date[2],
         seed: seed == null ? true : seed[2],
         none: none == null ? null : none[2],
         from: from == -1 ? false : true
@@ -647,17 +687,44 @@ export default {
     width: 100%;
     height: 100%;
     // background-image: url("./assets/img/welcome_bg.png");
-    background-image: url('./assets/img/share.png');
+    background-image: url("./assets/img/share.png");
     background-size: 100%;
     background-repeat: no-repeat;
     background-color: #16201f;
-    .text {
+    p {
       position: absolute;
-      left: 0px;
-      bottom: 10%;
       width: 100%;
       text-align: center;
+      font-size: 11px;
+      font-weight: bold;
+      color: #4d78ad;
+      transform: scale(0.7, 0.7);
+      &.patent {
+        bottom: 9%;
+      }
+      &.nickname {
+        top: 43.5%;
+      }
+      &.date {
+        left: 23.5%;
+        bottom: 15%;
+        transform: scale(0.5, 0.5);
+        font-size: 11px;
+        color: #3e3a39;
+        text-align: left;
+        font-weight: 600;
+        span {
+          border-color: #393a39;
+          color: #3e3a39;
+        }
+      }
+    }
+    span {
+      padding: 0px 15px;
+      color: #4d78ad;
       font-size: 12px;
+      font-weight: bold;
+      border-bottom: 1px solid #4d78ad;
     }
     .img {
       position: absolute;

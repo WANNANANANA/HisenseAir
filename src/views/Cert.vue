@@ -3,7 +3,18 @@
     <div class="cert">
       <div class="show">
         <div class="pic">
-          <p>证书编号：{{cretNum}}</p>
+          <p class="nickname">
+            捐赠人：
+            <span>{{nickname}}</span>
+          </p>
+          <p class="cretnum">
+            证书编号：
+            <span>{{cretNum}}</span>
+          </p>
+          <p class="date">
+            日期：
+            <span>{{date}}</span>
+          </p>
           <img src="../assets/img/cret.png" alt />
         </div>
         <div class="button">
@@ -21,13 +32,18 @@
 export default {
   name: "cert",
   beforeRouteEnter(to, from, next) {
+    console.log(to);
     next(vm => {
-      vm.cretNum = to.params.id;
+      vm.cretNum = to.params.patent;
+      vm.nickname = to.params.nickname;
+      vm.date = to.params.date;
     });
   },
   data() {
     return {
-      cretNum: ""
+      cretNum: "",
+      nickname: "",
+      date: ""
     };
   },
   methods: {
@@ -73,12 +89,39 @@ export default {
     font-size: 0;
     p {
       position: absolute;
-      left: 50%;
-      bottom: 8%;
       width: 100%;
       text-align: center;
       font-size: 12px;
-      transform: translate(-50%, -50%);
+      font-weight: bold;
+      color: #4d78ad;
+      &.cretnum {
+        left: 50%;
+        bottom: 8%;
+        transform: translate(-50%, -50%);
+      }
+      &.nickname {
+        top: 45%;
+      }
+      &.date {
+        left: 33.5%;
+        bottom: 15%;
+        transform: scale(0.7, 0.7);
+        font-size: 11px;
+        color: #3e3a39;
+        text-align: left;
+        font-weight: 600;
+        span {
+          border-color: #393a39;
+          color: #3e3a39;
+        }
+      }
+      span {
+        padding: 0px 15px;
+        color: #4d78ad;
+        font-size: 12px;
+        font-weight: bold;
+        border-bottom: 1px solid #4d78ad;
+      }
     }
     img {
       width: 100%;
