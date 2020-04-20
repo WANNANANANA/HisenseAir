@@ -19,7 +19,7 @@
         </div>
         <div class="button">
           <div class="left">
-            <a href="http://open.huizhangongsi.com/hisense/watering/photoIndex"></a>
+            <a href="https://open.huizhangongsi.com/lsshz/photoIndex "></a>
           </div>
           <div class="right" @click="back"></div>
         </div>
