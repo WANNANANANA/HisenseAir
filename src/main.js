@@ -33,17 +33,17 @@ function successFun(data) {
         jsApiList: ['updateAppMessageShareData', 'updateTimelineShareData', 'hideMenuItems']
     });
 
-    wx.ready(function() {
+    wx.ready(function () {
         if (stage == 5) {
             let shareData = {
                 title: '海信中央空调智慧体验中心', // 分享标题  
                 desc: '聚集能量,植树为善', // 分享描述   
                 link: link, // 分享链接   
-                imgUrl: 'http://www.huizhangongsi.com/hisenseAir/logo.png', // 分享图片
-                success: function() {
+                imgUrl: 'https://www.huizhangongsi.com/hisenseAir/logo.png', // 分享图片
+                success: function () {
                     return false;
                 },
-                cancel: function() {
+                cancel: function () {
                     return false;
                 }
             };

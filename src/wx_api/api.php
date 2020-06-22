@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: danger.yang
- * Date: 2019/11/8
- * Time: 20:03
- */
 date_default_timezone_set('PRC');
 
 $wx_arr = [
