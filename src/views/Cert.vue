@@ -2,6 +2,9 @@
   <transition name="left-enter">
     <div class="cert">
       <div class="show">
+        <div class="back" @click="back">
+          <img src="../assets/img/back_icon.png" alt />
+        </div>
         <div class="pic">
           <p class="nickname">
             捐赠人：
@@ -21,7 +24,7 @@
           <div class="left">
             <a href="https://open.huizhangongsi.com/lsshz/watering/photoIndex"></a>
           </div>
-          <div class="right" @click="back"></div>
+          <div class="right" @click="download"></div>
         </div>
       </div>
     </div>
@@ -29,11 +32,12 @@
 </template>
 
 <script>
+import html2canvas from "html2canvas";
+
 export default {
   name: "cert",
   beforeRouteEnter(to, from, next) {
-    console.log(to);
-    next(vm => {
+    next((vm) => {
       vm.cretNum = to.params.patent;
       vm.nickname = to.params.nickname;
       vm.date = to.params.date;
@@ -43,14 +47,29 @@ export default {
     return {
       cretNum: "",
       nickname: "",
-      date: ""
+      date: "",
     };
   },
   methods: {
+    download() {
+      const dom = document.getElementsByClassName("pic")[0];
+      html2canvas(dom, {
+        width: dom.offsetWidth,
+        height: dom.offsetHeight,
+        scale: 5,
+      }).then((canvas) => {
+        const el = document.createElement("a");
+        el.href = canvas.toDataURL();
+        el.download = "绿色先行者捐赠赠书";
+
+        const event = new MouseEvent("click");
+        el.dispatchEvent(event);
+      });
+    },
     back() {
       this.$router.back();
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="less">
@@ -75,13 +94,20 @@ export default {
   z-index: 18;
   width: 100%;
   height: 100%;
+  overflow: hidden;
   background: rgba(0, 0, 0, 0.5);
   .show {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 92%;
+    width: 90%;
+  }
+  .back {
+    margin-bottom: 2vh;
+    img {
+      width: 80px;
+    }
   }
   .pic {
     position: relative;
@@ -148,10 +174,10 @@ export default {
       }
     }
     .right {
-      width: 82px;
-      background-image: url("../assets/img/btn_sprite.png");
-      background-size: 102%;
-      background-position: center -36px;
+      width: 110px;
+      background-image: url("../assets/img/save_icon.png");
+      background-size: 100%;
+      background-position: center center;
     }
   }
 }

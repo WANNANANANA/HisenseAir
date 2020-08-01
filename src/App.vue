@@ -1073,7 +1073,8 @@ export default {
           float: left;
           &.icon-cret {
             background-image: url("./assets/img/icon_cret.png");
-            width: 76px;
+            width: 53px;
+            height: 67px;
           }
           &.icon-total {
             width: 51px;
