@@ -93,13 +93,16 @@
       </keep-alive>
       <introduction :stageClass="stageClass" :area="area"></introduction>
       <div class="icon">
-        <router-link v-if="stage != 5" :to="'/total/' + none" class="left icon-total" tag="div"></router-link>
-        <router-link
-          v-if="stage == 5"
-          :to="'/cert/' + patent + '/' + nickname + '/' + p_date"
-          class="left icon-cret"
-          tag="div"
-        ></router-link>
+        <div class="left">
+          <router-link v-if="stage != 5" class="icon-total" :to="'/total/' + none" tag="div"></router-link>
+          <router-link
+            v-if="stage == 5"
+            :to="'/cert/' + patent + '/' + nickname + '/' + p_date"
+            class="icon-cret"
+            tag="div"
+          ></router-link>
+          <img src="./assets/img/circle.png" alt="" class="circle" v-if="stage == 5">
+        </div>
         <router-link to="/about" class="right" tag="div" @click.native="showAboutFun"></router-link>
       </div>
       <main>
@@ -499,6 +502,15 @@ export default {
   opacity: 1;
 }
 
+@keyframes circle {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+
 @keyframes potRotate {
   0% {
     transform: rotateZ(0deg);
@@ -674,7 +686,6 @@ export default {
     z-index: 20;
     width: 100%;
     height: 100%;
-    // background-image: url("./assets/img/welcome_bg.png");
     background-image: url("./assets/img/share.png");
     background-size: 100%;
     background-repeat: no-repeat;
@@ -1058,13 +1069,25 @@ export default {
         height: 46px;
         background-size: 100% 100%;
         &.left {
+          width: 54px;
+          height: 54px;
+          position: relative;
           float: left;
-          &.icon-cret {
+          .circle {
+            width: 63px;
+            height: 63px;
+            margin: -9px 0px 0px -5px;
+            animation: circle 1s linear infinite;
+          }
+          .icon-cret {
+            position: absolute;
+            z-index: 6;
             background-image: url("./assets/img/icon_cret.png");
             width: 53px;
             height: 67px;
           }
-          &.icon-total {
+          .icon-total {
+            position: absolute;
             width: 51px;
             background-image: url("./assets/img/icon_total.png");
           }
