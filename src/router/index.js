@@ -2,18 +2,16 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import About from '../views/About.vue'
 import Total from '../views/Total.vue'
-import Cert from '../views/Cert.vue'
 
 Vue.use(VueRouter)
 
 export default new VueRouter({
-    // mode: 'history',
     base: process.env.BASE_URL,
-    routes: [{
+    routes: [
+        {
             path: '/cert/:patent/:nickname/:date',
             name: 'cert',
-            component: Cert
-            // component: () => import ('../views/Cert.vue')
+            component: () => import('../views/Cert.vue')
         },
         {
             path: '/about',

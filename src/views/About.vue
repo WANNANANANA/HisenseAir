@@ -4,9 +4,6 @@
       <h3 class="title">能量收集说明</h3>
       <div class="content">
         <div class="text">
-          <!-- <p>1、扫描各展区均可获得20%的能量，随着能量的增加种子渐渐生长;</p>
-          <p>2、直到所有的展区均扫描完成可获得100%的能量，种子成长为大树，大树旁边生成证书小图标，点开图标即为绿色先行者证书;</p>
-          <p>3、证书可保存至手机，点击证书下方的“上传图片”按钮即可上传自己的照片进行打印。</p> -->
           <img src="../assets/img/about.png" alt="">
         </div>
         <div class="back" @click="back"></div>
@@ -35,7 +32,6 @@ export default {
   height: 100%;
   padding: 36px 8% 0 8%;
   z-index: 10;
-  // background: #fff;
   background-image: url('../assets/img/blur_bg.png');
   background-size: cover;
   background-position: top center;
@@ -48,17 +44,8 @@ export default {
       .text {
         height: 80%;
         padding: 0 2%;
-        // border: 1px solid rgba(60, 212, 0, 0.3);
         border-radius: 6px;
-        // overflow: scroll;
         text-align: center;
-        // p {
-        //   color: #4c4c4c;
-        //   font-size: 14px;
-        //   margin-top: 12px;
-        //   text-indent: 2em;
-        //   padding: 0px;
-        // }
         img {
           height: 100%;
         }

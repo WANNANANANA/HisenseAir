@@ -12,17 +12,17 @@ new Vue({
     render: h => h(App)
 }).$mount('#app')
 
-let link = window.location.href,
+const link = window.location.href,
     search = window.location.search.slice(1),
-    stage = search.match(/(^|&)stage=([^&]*)(&|$)/);
-stage = stage == null ? null : stage[2];
+    stageObj = search.match(/(^|&)stage=([^&]*)(&|$)/),
+    stage = stageObj == null ? null : stageObj[2];
 
 function successFun(data) {
     data = data.data;
-    let app_id = data.app_id;
-    let timestamp = data.timestamp;
-    let noncestr = data.noncestr;
-    let signature = data.signature;
+    const app_id = data.app_id;
+    const timestamp = data.timestamp;
+    const noncestr = data.noncestr;
+    const signature = data.signature;
     wx.config({
         debug: false,
         appId: app_id,
@@ -35,7 +35,7 @@ function successFun(data) {
 
     wx.ready(function () {
         if (stage == 5) {
-            let shareData = {
+            const shareData = {
                 title: '海信中央空调智慧体验中心', // 分享标题  
                 desc: '聚集能量,植树为善', // 分享描述   
                 link: link, // 分享链接   

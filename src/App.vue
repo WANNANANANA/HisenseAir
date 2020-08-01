@@ -173,31 +173,31 @@ export default {
     let plantArr = [
         {
           name: "seed",
-          img: require("./assets/img/seed.png")
+          img: require("./assets/img/seed.png"),
         },
         {
           name: "sprout",
-          img: require("./assets/img/sprout.png")
+          img: require("./assets/img/sprout.png"),
         },
         {
           name: "branch",
-          img: require("./assets/img/branch.png")
+          img: require("./assets/img/branch.png"),
         },
         {
           name: "sapling",
-          img: require("./assets/img/sapling.png")
+          img: require("./assets/img/sapling.png"),
         },
         {
           name: "tree",
-          img: require("./assets/img/tree.png")
-        }
+          img: require("./assets/img/tree.png"),
+        },
       ],
       bgArr = [
         require("./assets/img/seed_bg.png"),
         require("./assets/img/sprout_bg.png"),
         require("./assets/img/branch_bg.png"),
         require("./assets/img/tree_bg.png"),
-        require("./assets/img/tree_bg.png")
+        require("./assets/img/tree_bg.png"),
       ],
       search = window.location.search.slice(1),
       {
@@ -209,7 +209,7 @@ export default {
         p_date,
         seed,
         none,
-        from
+        from,
       } = this.getParams(search); // String类型
 
     if (from) {
@@ -289,18 +289,6 @@ export default {
       stage = this.stage,
       area = this.area;
 
-    console.log(
-      this.patent,
-      this.nickname,
-      this.p_date,
-      this.stage,
-      this.sign,
-      this.area,
-      this.seed,
-      this.none,
-      this.from
-    );
-
     window.onload = () => {
       if (from) {
         this.loading = false;
@@ -366,7 +354,7 @@ export default {
       wateringShow1: 0, // 控制水滴1显示
       wateringShow2: 0, // 控制水滴2显示
       wateringShow3: 0, // 控制水滴3显示
-      wateringNum: 3 // 浇水次数
+      wateringNum: 3, // 浇水次数
     };
   },
   computed: {
@@ -375,7 +363,7 @@ export default {
     },
     percent() {
       return this.growth - 100 + "%";
-    }
+    },
   },
   methods: {
     getParams(matchStr) {
@@ -401,7 +389,7 @@ export default {
         p_date: p_date == null ? null : p_date[2],
         seed: seed == null ? true : seed[2],
         none: none == null ? null : none[2],
-        from: from == -1 ? false : true
+        from: from == -1 ? false : true,
       };
     },
     wateringFun() {
@@ -439,7 +427,7 @@ export default {
             }, 500);
           });
         })
-        .then(result => {
+        .then((result) => {
           if (this.wateringNum) {
             this.wateringFun();
           } else {
@@ -467,8 +455,8 @@ export default {
     },
     showAboutFun() {
       this.showBlurBg = true;
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="less">

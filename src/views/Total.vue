@@ -30,7 +30,7 @@ export default {
   name: "total",
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      let none = to.params.none;
+      const none = to.params.none;
       vm.areaActive1 = none.indexOf(1) == -1 ? true : false;
       vm.areaActive2 = none.indexOf(2) == -1 ? true : false;
       vm.areaActive3 = none.indexOf(3) == -1 ? true : false;
