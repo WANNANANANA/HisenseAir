@@ -22,6 +22,10 @@ module.exports = {
                     minRatio: 0.8
                 })
             )
+            config.externals = {
+                'vue': 'Vue',
+                'vue-router': 'VueRouter'
+            }
         }
         config.plugins = [
             ...config.plugins,
