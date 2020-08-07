@@ -2,8 +2,8 @@
   <transition name="left-enter">
     <div class="cert">
       <div class="show">
-        <div class="back" @click="back">
-          <img src="../assets/img/back_icon.png" alt />
+        <div class="back" style="color: #fff; text-align: center">
+          长按图片进行保存
         </div>
         <div class="pic">
           <p class="nickname">
@@ -24,7 +24,7 @@
           <div class="left">
             <a href="https://open.huizhangongsi.com/lsshz/watering/photoIndex"></a>
           </div>
-          <div class="right" @click="download"></div>
+           <div class="right" @click="back"></div>
         </div>
       </div>
     </div>
@@ -43,6 +43,11 @@ export default {
       vm.date = to.params.date;
     });
   },
+  mounted() {
+    setTimeout(() => {
+      this.createCanvasPic();
+    }, 1000);
+  },
   data() {
     return {
       cretNum: "",
@@ -51,19 +56,29 @@ export default {
     };
   },
   methods: {
-    download() {
+    createCanvasPic() {
       const dom = document.getElementsByClassName("pic")[0];
       html2canvas(dom, {
         width: dom.offsetWidth,
         height: dom.offsetHeight,
-        scale: 5,
+        scale: 2,
       }).then((canvas) => {
-        const el = document.createElement("a");
-        el.href = canvas.toDataURL();
-        el.download = "绿色先行者捐赠赠书";
+        const img = new Image();
+        img.src = canvas.toDataURL('image/jpeg');
+        img.onload = () => {
+          dom.innerHTML = '';
+          dom.appendChild(img);
+        }
 
-        const event = new MouseEvent("click");
-        el.dispatchEvent(event);
+        // 微信环境下不兼容
+        // const el = document.createElement("a");
+        // el.href = canvas.toDataURL("image/jpeg");
+        // el.download = "绿色先行者捐赠赠书";
+        // el.style.display = "none";
+
+        // const event = document.createEvent('MouseEvents');
+        // event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+        // el.dispatchEvent(event);
       });
     },
     back() {
@@ -95,7 +110,7 @@ export default {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7);
   .show {
     position: absolute;
     top: 50%;
@@ -174,10 +189,10 @@ export default {
       }
     }
     .right {
-      width: 110px;
-      background-image: url("../assets/img/save_icon.png");
-      background-size: 100%;
-      background-position: center center;
+      width: 82px;
+      background-image: url("../assets/img/btn_sprite.png");
+      background-size: 102%;
+      background-position: center -36px;
     }
   }
 }
